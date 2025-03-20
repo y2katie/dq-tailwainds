@@ -1,1 +1,1 @@
-# dq-materialui
+# dq-tailwinds
