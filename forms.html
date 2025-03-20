@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material UI Landing Page</title>
+    
+    <!-- Material UI CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mui/0.10.3/css/mui.min.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mui/0.10.3/js/mui.min.js" defer></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+          --color-clifford: #da373d;
+        }
+        
+      </style>
+
+
+   
+</head>
+<body class="h-full">
+   
+  
+    <div class="bg-white">
+        
+      <!-- Inaccessible Form - Poor Practices -->
+<div class="p-6 bg-gray-100">
+    <div class="text-xl mb-4">Contact Us</div>
+    
+    <form class="space-y-4">
+      <div>
+        <input 
+          type="text" 
+          placeholder="Enter your name" 
+          class="w-full p-2 bg-white rounded border">
+      </div>
+  
+      <div>
+        <input 
+          type="text" 
+          placeholder="Enter your email"
+          class="w-full p-2 bg-white rounded border">
+      </div>
+  
+      <div>
+        <select class="w-full p-2 bg-white rounded border text-gray-400">
+          <option>Choose topic</option>
+          <option>Support</option>
+          <option>Sales</option>
+        </select>
+      </div>
+  
+      <div>
+        <textarea 
+          placeholder="Your message"
+          class="w-full p-2 bg-white rounded border h-24"></textarea>
+      </div>
+  
+      <div class="flex items-center">
+        <input type="checkbox" class="mr-2">
+        <span class="text-gray-600">Accept terms</span>
+      </div>
+  
+      <button 
+        onclick="submit()" 
+        class="w-full bg-blue-500 text-white p-2 rounded">
+        SUBMIT
+      </button>
+    </form>
+  </div>
+  
+  <!-- Accessible Form - Best Practices -->
+  <div class="p-8 bg-white shadow-lg rounded-lg max-w-2xl mx-auto" role="region" aria-labelledby="contact-form-title">
+    <h2 id="contact-form-title" class="text-2xl font-bold text-gray-900 mb-6">
+      Contact Us
+    </h2>
+    
+    <form novalidate class="space-y-6" aria-label="Contact form">
+      <div class="form-group">
+        <label for="full-name" class="block text-sm font-semibold text-gray-700 mb-1">
+          Full Name <span aria-label="required" class="text-red-500">*</span>
+        </label>
+        <input 
+          type="text"
+          id="full-name"
+          name="full-name"
+          required
+          aria-required="true"
+          aria-describedby="name-error"
+          class="w-full px-4 py-2 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div id="name-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email-address" class="block text-sm font-semibold text-gray-700 mb-1">
+          Email Address <span aria-label="required" class="text-red-500">*</span>
+        </label>
+        <input 
+          type="email"
+          id="email-address"
+          name="email"
+          required
+          aria-required="true"
+          aria-describedby="email-error"
+          class="w-full px-4 py-2 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div id="email-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></div>
+      </div>
+  
+      <div class="form-group">
+        <label for="contact-topic" class="block text-sm font-semibold text-gray-700 mb-1">
+          Topic
+        </label>
+        <select 
+          id="contact-topic"
+          name="topic"
+          class="w-full px-4 py-2 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+          <option value="">Please select a topic</option>
+          <option value="support">Technical Support</option>
+          <option value="sales">Sales Inquiry</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="message-content" class="block text-sm font-semibold text-gray-700 mb-1">
+          Message <span aria-label="required" class="text-red-500">*</span>
+        </label>
+        <textarea
+          id="message-content"
+          name="message"
+          rows="4"
+          required
+          aria-required="true"
+          aria-describedby="message-error"
+          class="w-full px-4 py-2 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        <div id="message-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></div>
+      </div>
+  
+      <div class="form-group">
+        <div class="flex items-center gap-x-3">
+          <input
+            type="checkbox"
+            id="terms-accept"
+            name="terms"
+            required
+            aria-required="true"
+            aria-describedby="terms-error"
+            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500">
+          <label for="terms-accept" class="text-sm text-gray-700">
+            I agree to the <a href="/terms" class="font-semibold text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline">Terms and Conditions</a>
+          </label>
+        </div>
+        <div id="terms-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></div>
+      </div>
+  
+      <button
+        type="submit"
+        aria-label="Submit contact form"
+        class="w-full flex justify-center py-2.5 px-4 rounded-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 transition-colors">
+        Submit
+      </button>
+    </form>
+  </div>
+
+          
+    </div>
+</body>
+</html>
+
+
+
+Accessible Version Features:
+Semantic Structure
+Proper heading hierarchy with h2
+Form sections properly grouped
+role="region" for the form container
+Labels and ARIA
+All inputs have associated <label> elements
+Required fields marked with both visual and ARIA attributes
+Error message containers with role="alert"
+Descriptive aria-label attributes
+Focus Management
+Clear focus states with focus:ring-2
+Proper focus indicators for all interactive elements
+Focus visible outlines maintained
+Color and Contrast
+Sufficient color contrast ratios
+Visual hierarchy through typography
+Not relying solely on color for information
+Form Validation
+novalidate attribute for custom validation
+Error message containers ready for dynamic content
+Required field indicators
+
+
+Inaccessible Version Issues:
+Missing Essential Elements
+No proper labels
+Relies on placeholders only
+No error handling structure
+No ARIA attributes
+Poor Structure
+No semantic headings
+No form groups or sections
+No indication of required fields
+Inadequate Interaction
+Basic focus states only
+No clear feedback mechanisms
+Inline onclick handler
+Limited Styling
+Basic styling only
+Poor visual hierarchy
+Limited responsive design
