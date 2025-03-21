@@ -214,7 +214,7 @@
 </div>
 
 <!-- Good Examples -->
-<<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Bar Chart -->
     <div class="bg-white p-6 rounded-lg shadow-sm">
         <h4 id="revenue-chart" class="text-lg font-medium mb-4">Quarterly Revenue 2023</h4>
@@ -367,6 +367,630 @@
           <li>Proper data labeling and scales</li>
       </ul>
   </div>
+
+  <!-- Good Bar Chart Example -->
+<div class="bg-white p-6 rounded-lg shadow-sm">
+    <h4 id="revenue-chart" class="text-lg font-medium mb-4">Quarterly Revenue 2023</h4>
+    <div class="relative h-80" role="img" aria-labelledby="revenue-chart revenue-desc">
+        <!-- Y-axis labels -->
+        <div class="absolute left-0 h-full flex flex-col justify-between py-4 text-sm text-gray-600">
+            <span>$100K</span>
+            <span>$75K</span>
+            <span>$50K</span>
+            <span>$25K</span>
+            <span>$0</span>
+        </div>
+
+        <!-- Grid Lines -->
+        <div class="absolute inset-0 ml-16 flex flex-col justify-between py-4">
+            <div class="border-b border-gray-200"></div>
+            <div class="border-b border-gray-200"></div>
+            <div class="border-b border-gray-200"></div>
+            <div class="border-b border-gray-200"></div>
+            <div class="border-b border-gray-200"></div>
+        </div>
+
+        <!-- Bars with Decorative Icons -->
+        <div class="absolute inset-0 ml-16 flex items-end justify-around px-8 pb-4">
+            <!-- Q1 Bar -->
+            <div class="flex flex-col items-center gap-2 group">
+                <div class="relative">
+                    <div style="height: 25%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
+                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
+                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            $25,000
+                        </div>
+                    </div>
+                </div>
+                <span class="text-sm font-medium">Q1</span>
+            </div>
+
+            <!-- Q2 Bar -->
+            <div class="flex flex-col items-center gap-2 group">
+                <div class="relative">
+                    <div style="height: 50%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
+                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
+                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            $50,000
+                        </div>
+                    </div>
+                </div>
+                <span class="text-sm font-medium">Q2</span>
+            </div>
+
+            <!-- Q3 Bar -->
+            <div class="flex flex-col items-center gap-2 group">
+                <div class="relative">
+                    <div style="height: 75%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
+                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
+                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            $75,000
+                        </div>
+                    </div>
+                </div>
+                <span class="text-sm font-medium">Q3</span>
+            </div>
+
+            <!-- Q4 Bar -->
+            <div class="flex flex-col items-center gap-2 group">
+                <div class="relative">
+                    <div style="height: 100%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
+                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
+                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            $100,000
+                        </div>
+                    </div>
+                </div>
+                <span class="text-sm font-medium">Q4</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen Reader Description -->
+    <div id="revenue-desc" class="sr-only">
+        Bar chart showing quarterly revenue for 2023: Quarter 1: $25,000, Quarter 2: $50,000, Quarter 3: $75,000, Quarter 4: $100,000
+    </div>
+</div>
+<p>
+Key WCAG compliance features:
+
+Decorative images properly marked:
+
+Empty alt attributes: alt=""
+aria-hidden="true" to hide from screen readers
+Interactive features:
+
+Hover effects with transitions
+Tooltips showing exact values
+High contrast colors (4.5:1 minimum)
+Accessibility features:
+
+Proper ARIA roles and labels
+Screen reader description
+Semantic HTML structure
+Clear visual hierarchy
+Multiple ways to understand data
+Data visualization:
+
+Clear axis labels
+Consistent spacing
+Grid lines for reference
+Responsive design
+Interactive feedback
+WCAG Success Criteria met:
+
+1.1.1 Non-text Content
+1.4.1 Use of Color
+1.4.3 Contrast
+2.1.1 Keyboard
+2.4.3 Focus Order
+</p>
+
+<!-- Section 4: Decorative Images -->
+<section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">4. Decorative Images - Accessibility Examples</h2>
+
+    <!-- Bad Examples -->
+    <div class="mb-12">
+        <h3 class="text-lg font-semibold mb-4 text-red-600">❌ Bad Examples - Improper Decorative Image Handling</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Bad Example 1: Background Pattern -->
+            <div class="relative h-48 bg-white rounded-lg shadow-sm overflow-hidden">
+                <img 
+                    src="https://pattern.com/geometric.png" 
+                    alt="Geometric background pattern"
+                    class="absolute inset-0 w-full h-full object-cover">
+                <div class="relative z-10 p-6">
+                    <h4 class="text-lg font-medium">Unnecessary Alt Text</h4>
+                    <p class="text-gray-600">This decorative background doesn't need description</p>
+                </div>
+            </div>
+
+            <!-- Bad Example 2: Bullet Points -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <ul class="space-y-4">
+                    <li class="flex items-center">
+                        <img 
+                            src="https://bullets.com/dot.svg" 
+                            alt="Bullet point"
+                            class="w-4 h-4 mr-2">
+                        <span>List item with redundant bullet alt</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Good Examples -->
+    <div>
+        <h3 class="text-lg font-semibold mb-4 text-green-600">✅ Good Examples - Proper Decorative Image Handling</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Good Example 1: Background Pattern -->
+            <div class="relative h-48 bg-white rounded-lg shadow-sm overflow-hidden">
+                <img 
+                    src="https://pattern.com/geometric.png" 
+                    alt=""
+                    aria-hidden="true"
+                    class="absolute inset-0 w-full h-full object-cover">
+                <div class="relative z-10 p-6">
+                    <h4 class="text-lg font-medium">Properly Hidden Background</h4>
+                    <p class="text-gray-600">Background pattern ignored by screen readers</p>
+                </div>
+            </div>
+
+            <!-- Good Example 2: Separator -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="space-y-4">
+                    <p>Section above divider</p>
+                    <img 
+                        src="https://separators.com/line.svg" 
+                        alt=""
+                        aria-hidden="true"
+                        class="w-full h-px bg-gray-200">
+                    <p>Section below divider</p>
+                </div>
+            </div>
+
+            <!-- Good Example 3: Icon with Text -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-center space-x-3">
+                    <img 
+                        src="https://icons.com/check.svg" 
+                        alt=""
+                        aria-hidden="true"
+                        class="w-6 h-6 text-green-500">
+                    <span class="text-gray-700">Status message with decorative icon</span>
+                </div>
+            </div>
+
+            <!-- Good Example 4: Card Design -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <img 
+                    src="https://patterns.com/card-top.svg" 
+                    alt=""
+                    aria-hidden="true"
+                    class="w-full h-12 object-cover">
+                <div class="p-6">
+                    <h4 class="text-lg font-medium">Card with Decorative Header</h4>
+                    <p class="text-gray-600">Content is the focus, not the design elements</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WCAG Success Criteria Notes -->
+    <div class="max-w-7xl mx-auto p-4 bg-blue-50 rounded-lg mt-8">
+        <h3 class="font-semibold text-blue-900 mb-2">WCAG 1.1.1 Success Criteria Met:</h3>
+        <ul class="list-disc pl-5 text-blue-800">
+            <li>Empty alt attributes for decorative images</li>
+            <li>Proper use of aria-hidden="true"</li>
+            <li>Semantic structure maintained</li>
+            <li>Content remains accessible</li>
+            <li>Design elements properly separated from content</li>
+            <li>No unnecessary screen reader noise</li>
+            <li>Consistent application of decorative image patterns</li>
+        </ul>
+    </div>
+<p>
+    Empty Alt Text:
+
+Used alt="" for all decorative images
+Added aria-hidden="true" for extra clarity
+Proper Use Cases:
+
+Background patterns
+Decorative separators
+Visual bullets
+Design elements
+Implementation Patterns:
+
+Consistent approach across different contexts
+Clear separation of content and decoration
+Proper layering with z-index
+Maintained semantic structure
+WCAG Compliance:
+
+Follows 1.1.1 Non-text Content guidelines
+Preserves accessibility of main content
+Reduces screen reader noise
+Maintains visual design integrity
+
+</p>
+</section>
+<!-- Section 5: Complex Interactive Elements -->
+<section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">5. Complex Interactive Elements</h2>
+
+    <!-- Bad Examples -->
+    <div class="mb-12">
+        <h3 class="text-lg font-semibold mb-4 text-red-600">❌ Bad Examples - Inaccessible Interactive Elements</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Bad Dropdown -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="relative" onclick="toggleDropdown()">
+                    <div class="p-2 border cursor-pointer">
+                        Select Option
+                        <span>▼</span>
+                    </div>
+                    <div class="hidden absolute top-full left-0 w-full border bg-white">
+                        <div class="p-2">Option 1</div>
+                        <div class="p-2">Option 2</div>
+                        <div class="p-2">Option 3</div>
+                    </div>
+                </div>
+                <!-- Issues:
+                    - No keyboard support
+                    - Missing ARIA attributes
+                    - No focus management
+                    - No screen reader announcements
+                    - Relies on mouse interaction
+                -->
+            </div>
+
+            <!-- Bad Modal -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <button onclick="showModal()">Open Modal</button>
+                <div class="hidden fixed inset-0 bg-black bg-opacity-50">
+                    <div class="bg-white p-6 rounded-lg">
+                        <h3>Modal Title</h3>
+                        <p>Modal content...</p>
+                        <button onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+                <!-- Issues:
+                    - No focus trap
+                    - Missing ARIA roles
+                    - No keyboard escape
+                    - No focus return
+                    - No screen reader context
+                -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Good Examples -->
+    <div>
+        <h3 class="text-lg font-semibold mb-4 text-green-600">✅ Good Examples - Accessible Interactive Elements</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Good Dropdown -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="relative">
+                    <button
+                        type="button"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-labelledby="dropdown-label dropdown-button"
+                        class="w-full flex items-center justify-between p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        id="dropdown-button">
+                        <span id="dropdown-label">Select Option</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <ul
+                        role="listbox"
+                        tabindex="-1"
+                        aria-labelledby="dropdown-label"
+                        class="hidden absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg"
+                        id="dropdown-menu">
+                        <li
+                            role="option"
+                            aria-selected="false"
+                            tabindex="0"
+                            class="p-2 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none cursor-pointer">
+                            Option 1
+                        </li>
+                        <li
+                            role="option"
+                            aria-selected="false"
+                            tabindex="0"
+                            class="p-2 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none cursor-pointer">
+                            Option 2
+                        </li>
+                        <li
+                            role="option"
+                            aria-selected="false"
+                            tabindex="0"
+                            class="p-2 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none cursor-pointer">
+                            Option 3
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Good Modal -->
+            <!-- Good Modal Implementation -->
+<div class="bg-white p-6 rounded-lg shadow-sm">
+    <button
+        type="button"
+        id="open-modal-btn"
+        aria-haspopup="dialog"
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        Open Modal
+    </button>
+    <div
+        id="modal"
+        role="dialog"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-content"
+        aria-modal="true"
+        class="hidden fixed inset-0 z-50">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="modal-title" class="text-xl font-semibold">Modal Title</h2>
+                        <button
+                            type="button"
+                            id="close-modal-btn"
+                            aria-label="Close modal"
+                            class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full p-1">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="modal-content" class="mb-6">
+                        <p>This is an accessible modal example with proper focus management and keyboard interactions.</p>
+                    </div>
+                    <div class="flex justify-end">
+                        <button
+                            type="button"
+                            class="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                            id="confirm-modal-btn">
+                            Close Modal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- WCAG Success Criteria Notes -->
+    <div class="max-w-7xl mx-auto p-4 bg-blue-50 rounded-lg mt-8">
+        <h3 class="font-semibold text-blue-900 mb-2">Key Accessibility Improvements:</h3>
+        <ul class="list-disc pl-5 text-blue-800">
+            <li>Proper ARIA roles, states, and properties</li>
+            <li>Keyboard navigation support (Tab, Enter, Space, Escape)</li>
+            <li>Focus management and focus trapping in modals</li>
+            <li>Clear visual focus indicators</li>
+            <li>Screen reader announcements for state changes</li>
+            <li>Semantic HTML structure</li>
+            <li>Proper event handling</li>
+            <li>Mobile and touch device support</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Add necessary JavaScript -->
+<script>
+    // Modal Implementation
+    const Modal = {
+        modal: document.getElementById('modal'),
+        openBtn: document.getElementById('open-modal-btn'),
+        closeBtn: document.getElementById('close-modal-btn'),
+        confirmBtn: document.getElementById('confirm-modal-btn'),
+        lastActiveElement: null,
+        
+        init() {
+            // Open modal
+            this.openBtn.addEventListener('click', () => this.open());
+            
+            // Close modal buttons
+            this.closeBtn.addEventListener('click', () => this.close());
+            this.confirmBtn.addEventListener('click', () => this.close());
+            
+            // Close on backdrop click
+            this.modal.addEventListener('click', (e) => {
+                if (e.target === this.modal) {
+                    this.close();
+                }
+            });
+            
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isOpen()) {
+                    this.close();
+                }
+            });
+    
+            // Trap focus in modal
+            this.modal.addEventListener('keydown', (e) => {
+                if (this.isOpen() && e.key === 'Tab') {
+                    this.trapFocus(e);
+                }
+            });
+        },
+    
+        isOpen() {
+            return !this.modal.classList.contains('hidden');
+        },
+    
+        open() {
+            // Store last active element to restore focus later
+            this.lastActiveElement = document.activeElement;
+            
+            // Show modal
+            this.modal.classList.remove('hidden');
+            
+            // Set focus to first focusable element
+            this.closeBtn.focus();
+            
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+            
+            // Announce modal to screen readers
+            this.modal.setAttribute('aria-hidden', 'false');
+        },
+    
+        close() {
+            // Hide modal
+            this.modal.classList.add('hidden');
+            
+            // Restore focus to last active element
+            if (this.lastActiveElement) {
+                this.lastActiveElement.focus();
+            }
+            
+            // Restore background scrolling
+            document.body.style.overflow = '';
+            
+            // Update ARIA
+            this.modal.setAttribute('aria-hidden', 'true');
+        },
+    
+        trapFocus(e) {
+            // Get all focusable elements
+            const focusableElements = this.modal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+    
+            // If shift + tab pressed and first element is focused, move to last focusable element
+            if (e.shiftKey && document.activeElement === firstFocusable) {
+                e.preventDefault();
+                lastFocusable.focus();
+            }
+            
+            // If tab pressed and last element is focused, move to first focusable element
+            else if (!e.shiftKey && document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
+            }
+        }
+    };
+    
+    // Initialize modal
+    Modal.init();
+
+    const Dropdown = {
+    button: document.getElementById('dropdown-button'),
+    menu: document.getElementById('dropdown-menu'),
+    label: document.getElementById('dropdown-label'),
+    
+    init() {
+        // Toggle dropdown on button click
+        this.button.addEventListener('click', () => this.toggle());
+        
+        // Handle keyboard navigation
+        this.button.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.open();
+                this.menu.querySelector('[role="option"]').focus();
+            }
+        });
+        
+        // Handle option selection
+        this.menu.querySelectorAll('[role="option"]').forEach(option => {
+            option.addEventListener('click', () => this.selectOption(option));
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.selectOption(option);
+                }
+                if (e.key === 'Escape') {
+                    this.close();
+                    this.button.focus();
+                }
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.navigateOptions(e.key === 'ArrowDown' ? 1 : -1, option);
+                }
+            });
+        });
+        
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!this.button.contains(e.target) && !this.menu.contains(e.target)) {
+                this.close();
+            }
+        });
+        
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen()) {
+                this.close();
+                this.button.focus();
+            }
+        });
+    },
+    
+    isOpen() {
+        return !this.menu.classList.contains('hidden');
+    },
+    
+    toggle() {
+        this.isOpen() ? this.close() : this.open();
+    },
+    
+    open() {
+        this.menu.classList.remove('hidden');
+        this.button.setAttribute('aria-expanded', 'true');
+    },
+    
+    close() {
+        this.menu.classList.add('hidden');
+        this.button.setAttribute('aria-expanded', 'false');
+    },
+    
+    selectOption(option) {
+        // Update selected state
+        this.menu.querySelectorAll('[role="option"]').forEach(opt => {
+            opt.setAttribute('aria-selected', 'false');
+        });
+        option.setAttribute('aria-selected', 'true');
+        
+        // Update button text
+        this.label.textContent = option.textContent;
+        
+        // Close dropdown
+        this.close();
+        this.button.focus();
+    },
+    
+    navigateOptions(direction, currentOption) {
+        const options = Array.from(this.menu.querySelectorAll('[role="option"]'));
+        const currentIndex = options.indexOf(currentOption);
+        const nextIndex = (currentIndex + direction + options.length) % options.length;
+        options[nextIndex].focus();
+    }
+};
+
+// Initialize dropdown after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    Dropdown.init();
+});
+    </script>
+</section>
 </section>
 </body>
 </html>
