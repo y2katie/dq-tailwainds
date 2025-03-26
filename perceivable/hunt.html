@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Scavenger Hunt | Learn Accessibility</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen">
+    <!-- Game Stats -->
+    <div class="fixed top-4 left-4 bg-white p-4 rounded-lg shadow-lg space-y-2">
+        <div class="text-lg font-bold">Score: <span id="current-score">0</span></div>
+        <div class="text-sm text-gray-600">Found: <span id="found-count">0</span>/<span id="total-count">0</span></div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Demo Website with Accessibility Issues -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <section class="text-center mb-12 pt-16">
+            <h1 class="text-4xl font-bold mb-4">Find the Accessibility Issues!</h1>
+            <p class="text-gray-600">Identify and fix accessibility issues in this demo website</p>
+        </section>
+
+        <!-- Product Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Product Card with Intentional Issues -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <img src="https://picsum.photos/400/300" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 style="color: #666">Premium Headphones</h3>
+                    <p class="text-sm text-gray-500">$299.99</p>
+                    <div onclick="addToCart(1)" class="mt-4 bg-indigo-600 text-white text-center p-2 rounded cursor-pointer">
+                        Add to Cart
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Form with Issues -->
+        <section class="bg-indigo-600 p-8 rounded-lg">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-2xl font-bold text-white mb-4">Newsletter</h2>
+                <div class="flex">
+                    <input type="text" placeholder="Enter email" class="flex-1 p-2 rounded-l">
+                    <div onclick="subscribe()" class="bg-white text-indigo-600 px-6 py-2 rounded-r cursor-pointer">
+                        Subscribe
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Controls -->
+    <div class="fixed bottom-4 right-4 flex gap-4">
+        <button id="hint-button" 
+            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+            Need a Hint?
+        </button>
+        <button id="check-issues" 
+            class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Check Issues
+        </button>
+    </div>
+
+    <!-- Issues Modal -->
+    <div id="issues-modal" class="hidden fixed inset-0 z-50" role="dialog" aria-labelledby="modal-title">
+        <div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
+        <div class="relative z-10 min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                    <h2 id="modal-title" class="text-2xl font-bold text-gray-900">Accessibility Issues</h2>
+                    <button id="close-modal" 
+                        class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full p-1"
+                        aria-label="Close modal">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="overflow-y-auto p-6">
+                    <div id="issues-list" class="space-y-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const GAME_CONFIG = {
+    maxHints: 3,
+    pointValues: {
+        easy: 1,
+        medium: 2,
+        hard: 3
+    }
+};
+
+const ACCESSIBILITY_ISSUES = {
+    images: [
+        {
+            id: 'img-1',
+            selector: 'img:not([alt])',
+            issue: 'Missing alt text on product image',
+            hint: 'Product images need descriptive alt text',
+            category: 'WCAG 1.1.1',
+            difficulty: 'easy'
+        }
+    ],
+    headings: [
+        {
+            id: 'h-1',
+            selector: 'h3[style]',
+            issue: 'Inline styles for text contrast',
+            hint: 'Text contrast should meet WCAG guidelines',
+            category: 'WCAG 1.4.3',
+            difficulty: 'medium'
+        }
+    ],
+    buttons: [
+        {
+            id: 'btn-1',
+            selector: '[onclick]:not(button)',
+            issue: 'Non-semantic button elements',
+            hint: 'Interactive elements should use button tags',
+            category: 'WCAG 4.1.2',
+            difficulty: 'medium'
+        }
+    ],
+    forms: [
+        {
+            id: 'form-1',
+            selector: 'input:not([id])',
+            issue: 'Form input missing label',
+            hint: 'Form controls need associated labels',
+            category: 'WCAG 3.3.2',
+            difficulty: 'medium'
+        }
+    ]
+};
+
+const gameState = {
+    score: 0,
+    foundIssues: new Set(),
+    hintsUsed: 0,
+    lastActiveElement: null,
+
+    get totalIssues() {
+        return Object.values(ACCESSIBILITY_ISSUES).flat().length;
+    },
+
+    updateUI() {
+        document.getElementById('current-score').textContent = this.score;
+        document.getElementById('found-count').textContent = this.foundIssues.size;
+        document.getElementById('total-count').textContent = this.totalIssues;
+        
+        const progress = (this.foundIssues.size / this.totalIssues) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+
+        if (this.foundIssues.size === this.totalIssues) {
+            this.showCompletion();
+        }
+    },
+
+    showCompletion() {
+        setTimeout(() => {
+            showToast('🎉 Congratulations! You\'ve found all accessibility issues!');
+        }, 1000);
+    }
+};
+
+const modalManager = {
+    init() {
+        const modal = document.getElementById('issues-modal');
+        const closeButton = document.getElementById('close-modal');
+        const checkButton = document.getElementById('check-issues');
+
+        checkButton.addEventListener('click', () => {
+            this.show();
+            this.updateIssuesList();
+        });
+
+        closeButton.addEventListener('click', () => this.hide());
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) this.hide();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                this.hide();
+            }
+        });
+    },
+
+    show() {
+        const modal = document.getElementById('issues-modal');
+        modal.classList.remove('hidden');
+        document.getElementById('close-modal').focus();
+        document.body.style.overflow = 'hidden';
+        gameState.lastActiveElement = document.activeElement;
+    },
+
+    hide() {
+        const modal = document.getElementById('issues-modal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (gameState.lastActiveElement) {
+            gameState.lastActiveElement.focus();
+        }
+    },
+
+    updateIssuesList() {
+        const container = document.getElementById('issues-list');
+        container.innerHTML = '';
+
+        Object.entries(ACCESSIBILITY_ISSUES).forEach(([category, issues]) => {
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'mb-6';
+            categoryElement.innerHTML = `
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                <div class="space-y-3">
+                    ${issues.map(issue => `
+                        <div class="flex items-start gap-4 p-4 rounded-lg ${gameState.foundIssues.has(issue.id) ? 'bg-green-50' : 'bg-gray-50'}">
+                            <input 
+                                type="checkbox" 
+                                id="${issue.id}"
+                                ${gameState.foundIssues.has(issue.id) ? 'checked disabled' : ''}
+                                class="mt-1 h-4 w-4 text-indigo-600 rounded focus:ring-indigo-500">
+                            <div class="flex-1">
+                                <label for="${issue.id}" class="text-gray-900 font-medium">${issue.issue}</label>
+                                <p class="text-sm text-gray-500 mt-1">${issue.category} - ${GAME_CONFIG.pointValues[issue.difficulty]} points</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(categoryElement);
+        });
+
+        this.addCheckboxListeners();
+    },
+
+    addCheckboxListeners() {
+        document.querySelectorAll('#issues-list input[type="checkbox"]:not([disabled])').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    handleIssueFound(e.target.id);
+                }
+            });
+        });
+    }
+};
+
+function handleIssueFound(issueId) {
+    if (gameState.foundIssues.has(issueId)) return;
+
+    const issue = findIssueById(issueId);
+    if (!issue) return;
+
+    gameState.foundIssues.add(issueId);
+    const points = GAME_CONFIG.pointValues[issue.difficulty];
+    gameState.score += points;
+    gameState.updateUI();
+    
+    showToast(`Found issue! +${points} points`);
+    modalManager.updateIssuesList();
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+function findIssueById(id) {
+    return Object.values(ACCESSIBILITY_ISSUES)
+        .flat()
+        .find(issue => issue.id === id);
+}
+
+// Initialize game
+document.addEventListener('DOMContentLoaded', () => {
+    modalManager.init();
+    gameState.updateUI();
+
+    document.getElementById('hint-button').addEventListener('click', () => {
+        if (gameState.hintsUsed >= GAME_CONFIG.maxHints) {
+            showToast('No more hints available!');
+            return;
+        }
+
+        const remainingIssues = Object.values(ACCESSIBILITY_ISSUES)
+            .flat()
+            .filter(issue => !gameState.foundIssues.has(issue.id));
+
+        if (remainingIssues.length > 0) {
+            const randomIssue = remainingIssues[Math.floor(Math.random() * remainingIssues.length)];
+            showToast(`Hint: ${randomIssue.hint}`);
+            gameState.hintsUsed++;
+        }
+    });
+});
+</script>
+</body>
+</html>
