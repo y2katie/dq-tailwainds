@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find WCAG Issues - Pawfect Pals Dog Walking</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .flash-banner {
+            animation: flash 0.2s infinite;
+        }
+        .auto-scroll {
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .reduced-motion * {
+            animation: none !important;
+            transition: none !important;
+        }
+        .review-card {
+    animation: fadeInOut 8s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
+
+/* Intentionally problematic focus styles */
+input:focus {
+    outline: none;
+}
+
+/* Color-only indicators */
+.status-active { color: green; }
+.status-busy { color: red; }
+
+/* Small touch targets */
+.icon-button {
+    width: 20px;
+    height: 20px;
+}
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Game UI -->
+    <div class="fixed top-4 right-4 bg-white p-4 rounded-lg shadow-lg z-50">
+        <div class="text-lg font-bold mb-2">🔍 Accessibility Detective</div>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+            <div>Perceivable: <span id="p-found">0</span>/10</div>
+            <div>Operable: <span id="o-found">0</span>/10</div>
+            <div>Understandable: <span id="u-found">0</span>/10</div>
+            <div>Robust: <span id="r-found">0</span>/10</div>
+        </div>
+        <div class="mt-2">Score: <span id="score" class="font-bold">0</span></div>
+        <button id="show-checklist" class="mt-4 w-full px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+            Check Issues
+        </button>
+        <div class="mt-2 text-xs text-gray-500">Hints Left: <span id="hints-left">3</span></div>
+    </div>
+
+    <!-- Demo Website Content -->
+    <main>
+        <!-- P1: Missing alt text -->
+        <!-- P2: Low contrast -->
+        <header class="relative h-[60vh]">
+            <img src="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="w-full h-full object-cover"/>
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <div class="text-center">
+                    <h1 style="color: #777777" class="text-6xl font-bold">
+                        Pawfect Pals
+                    </h1>
+                    <!-- O1: Flashing content -->
+                    <div class="flash-banner mt-4 text-yellow-300 text-2xl">
+                        🐾 First Walk Free! 🐾
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="py-16 bg-white">
+            <!-- P: Missing alt tags and decorative images not marked -->
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <img src="https://images.pexels.com/photos/2607544/pexels-photo-2607544.jpeg" class="w-full h-48 object-cover rounded-lg">
+                    <img src="https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg" class="w-full h-48 object-cover rounded-lg">
+                    <img src="https://images.pexels.com/photos/1813361/pexels-photo-1813361.jpeg" class="w-full h-48 object-cover rounded-lg">
+                    <img src="https://images.pexels.com/photos/1378849/pexels-photo-1378849.jpeg" class="w-full h-48 object-cover rounded-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- O2: Keyboard trap -->
+        <nav class="bg-white shadow-md" tabindex="0">
+            <div class="max-w-6xl mx-auto p-4">
+                <div class="flex justify-center space-x-8">
+                    <a href="#services" onclick="return false">Services</a>
+                    <a href="#booking" onclick="return false">Book Now</a>
+                    <a href="#about" onclick="return false">About</a>
+                </div>
+            </div>
+        </nav>
+
+    
+        
+
+
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <!-- P: Color contrast violation -->
+                    <h2 style="color: #888888" class="text-4xl font-bold">
+                        Our Services
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1: Basic -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <!-- U: No clear hierarchy -->
+                        <div class="text-2xl">Basic Walk</div>
+                        <div class="mt-2">30 minutes</div>
+                        <!-- P: Color-only status -->
+                        <div class="text-green-500">Most Popular</div>
+                        <!-- O: Small touch target -->
+                        <button class="w-8 h-8 bg-indigo-600 text-white mt-4">
+                            Book
+                        </button>
+                    </div>
+                    
+                    <!-- Card 2: Premium -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <!-- R: Invalid ARIA -->
+                        <div aria-role="heading">Premium Walk</div>
+                        <div class="mt-2">60 minutes</div>
+                        <!-- U: Unclear pricing -->
+                        <div>$$</div>
+                        <!-- O: Mouse-only interaction -->
+                        <div onmouseenter="showDetails()" class="mt-4">
+                            Hover for details
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <!-- R: Invalid ARIA -->
+                        <div aria-role="heading">Premium Walk</div>
+                        <div class="mt-2">60 minutes</div>
+                        <!-- U: Unclear pricing -->
+                        <div>$$</div>
+                        <!-- O: Mouse-only interaction -->
+                        <div onmouseenter="showDetails()" class="mt-4">
+                            Hover for details
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-indigo-50">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- P: Complex image without text alternative -->
+                    <div class="relative">
+                        <img 
+                            src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"
+                            class="w-full rounded-lg shadow-lg">
+                        <!-- O: Mouse-dependent interaction -->
+                        <div 
+                            class="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity"
+                            onmouseover="showImageDetails()">
+                            <div class="p-4 text-white">
+                                <!-- U: Mixed language content -->
+                                <p>🎖️ Prix d'excellence - Best in Show</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- R: Improper image map implementation -->
+                    <div class="space-y-4">
+                        <img 
+                            src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"
+                            class="w-full rounded-lg">
+                        <map name="walkingMap">
+                            <area shape="rect" coords="0,0,100,100" href="#" alt>
+                        </map>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- U3: No form labels -->
+        <!-- U4: Unexpected changes -->
+        <section class="py-12 bg-gray-50">
+            <h2 class="text-4xl font-bold text-center">Tell Us More</h2> <br>
+            <div class="max-w-md mx-auto">
+                <form class="bg-white p-6 rounded-lg shadow-md">
+                    <input type="text" placeholder="Dog's Name" class="w-full p-2 border rounded">
+                    <select onchange="this.form.submit()" class="mt-4 w-full p-2 border rounded">
+                        <option>Select Service</option>
+                    </select>
+                </form>
+            </div>
+        </section>
+
+        <!-- O4: No pause mechanism -->
+        <div class="auto-scroll overflow-hidden py-8">
+            <div class="flex space-x-8">
+               
+                <blockquote>"Best dog walkers ever!"</blockquote>
+                <blockquote>"My pup loves them!"</blockquote>
+            </div>
+        </div>
+
+        <!-- R1: Invalid HTML -->
+        <!-- R2: No ARIA labels -->
+
+        <section class="py-16 bg-gray-50">
+            <h2 class="text-4xl font-bold text-center">Our Happy Clients</h2> <br>
+
+            <div class="max-w-6xl mx-auto px-4">
+                             
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- P: Decorative images with inappropriate alt text -->
+                    <div class="text-center">
+                        <img 
+                            src="https://images.pexels.com/photos/1612861/pexels-photo-1612861.jpeg"
+                            alt="Professional dog walker photo"
+                            class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                        <h3 class="text-xl font-semibold">Sarah</h3>
+                        <!-- U: Inconsistent information presentation -->
+                        <p>Head Walker & Trainer</p>
+                    </div>
+                    
+                    <!-- P: Missing alt text completely -->
+                    <div class="text-center">
+                        <img 
+                            src="https://images.pexels.com/photos/1591939/pexels-photo-1591939.jpeg"
+                            class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                        <h3 class="text-xl font-semibold">Mike</h3>
+                        <p>Senior Dog Walker</p>
+                    </div>
+        
+                    <!-- P: Over-descriptive alt text -->
+                    <div class="text-center">
+                        <img 
+                            src="https://images.pexels.com/photos/1545346/pexels-photo-1545346.jpeg"
+                            alt="A young female dog walker wearing a blue shirt and smiling while standing next to a golden retriever in a park setting with trees in the background on a sunny day"
+                            class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                        <h3 class="text-xl font-semibold">Emma</h3>
+                        <p>Dog Behavior Specialist</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add before the footer -->
+
+        <!-- <footer bgcolor="blue">
+            <custom-contact>
+                Contact us today!
+            </custom-contact>
+        </footer> -->
+    </main>
+
+    <section class="py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- P: Image without alt -->
+            <img src="https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="w-full mb-8">
+            
+            <!-- O: Auto-playing content -->
+            <div class="auto-scroll overflow-hidden">
+                <div class="flex space-x-8">
+                    <!-- R: Custom elements without roles -->
+                    <review-card>
+                        <!-- P: Low contrast quote -->
+                        <blockquote style="color: #777">
+                            "The best dog walking service ever!"
+                        </blockquote>
+                        <cite>- Sarah & Max 🐕</cite>
+                    </review-card>
+                    
+                    <review-card>
+                        <!-- U: Mixed language without indication -->
+                        <blockquote>
+                            "Très bon service! Amazing walks!"
+                        </blockquote>
+                        <cite>- Jean & Bella 🐾</cite>
+                    </review-card>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ 
+
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-md mx-auto px-4">
+            <div style="color: #999999" class="text-center mb-8"> <!-- P: Low contrast -->
+                <h2 class="text-3xl font-bold">Contact Us</h2>
+            </div>
+    
+            <!-- Form with multiple accessibility violations -->
+            <form class="bg-white p-6 rounded-lg shadow-md space-y-4">
+                <!-- R: Missing label associations -->
+                <!-- U: No error messages -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label>First</label> <!-- Missing 'for' attribute -->
+                        <input type="text" class="w-full p-2 border rounded outline-none"> <!-- No focus styles -->
+                    </div>
+                    <div>
+                        <label>Last</label>
+                        <input type="text" class="w-full p-2 border rounded outline-none">
+                    </div>
+                </div>
+    
+                <!-- P: Color only validation -->
+                <div>
+                    <input 
+                        type="email" 
+                        placeholder="email@example.com" 
+                        class="w-full p-2 border rounded"
+                        oninput="this.style.borderColor = this.value.includes('@') ? 'green' : 'red'">
+                </div>
+    
+                <!-- O: Mouse-dependent interaction -->
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Your dog's breed"
+                        class="w-full p-2 border rounded"
+                        onmouseover="showBreedList()"
+                        onmouseout="hideBreedList()">
+                    <div id="breed-list" class="hidden absolute bg-white border rounded p-2 w-full">
+                        Popular breeds...
+                    </div>
+                </div>
+    
+                <!-- U: Unclear requirements -->
+                <!-- R: Invalid ARIA -->
+                <div>
+                    <textarea 
+                        aria-labeledby="message-label"
+                        placeholder="Tell us about your pup's personality!"
+                        class="w-full p-2 border rounded h-32"
+                        required></textarea>
+                    <div id="message-label" class="text-xs text-gray-500">
+                        Must be between 50-1000 characters and include specific details about 
+                        exercise preferences, socialization history, and dietary restrictions
+                    </div>
+                </div>
+    
+                <!-- O: Timing constraint -->
+                <!-- U: No warning -->
+                <div class="text-center" id="submit-wrapper">
+                    <button 
+                        type="submit" 
+                        class="px-6 py-2 bg-indigo-600 text-white rounded w-6 h-6" 
+                        onclick="startSubmitTimer()">
+                        →
+                    </button>
+                    <script>
+                        function startSubmitTimer() {
+                            setTimeout(() => {
+                                document.getElementById('submit-wrapper').innerHTML = 
+                                    'Session expired. Please refresh.';
+                            }, 5000);
+                        }
+                    </script>
+                </div>
+    
+                <!-- P: Icon-only buttons -->
+                <div class="flex justify-center gap-4 mt-4">
+                    <button type="button" class="p-2">📞</button>
+                    <button type="button" class="p-2">📧</button>
+                    <button type="button" class="p-2">💬</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="bg-indigo-50 py-16">
+        <div class="max-w-md mx-auto px-4">
+            <!-- U: No form validation -->
+            <form class="space-y-4" onsubmit="return submitForm()">
+                <!-- R: Missing label association -->
+                <div>
+                    <label>Subscribe to Our Newsletter:</label>
+                    <input 
+                        placeholder="Enter email"
+                        class="w-full p-2 border rounded">
+                </div>
+                
+                <!-- P: Icons only -->
+                <div class="flex justify-center gap-4">
+                    <button class="p-2">📧</button>
+                    <button class="p-2">🔔</button>
+                </div>
+                
+                <!-- O: Keyboard trap -->
+                <div tabindex="0" class="mt-4">
+                    <!-- U: Complex instructions -->
+                    <p class="text-xs">
+                        By clicking submit you hereby agree to our extensive terms and conditions 
+                        regarding the procurement of services related to but not limited to dog 
+                        walking activities...
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Issues Checklist Modal -->
+    <div id="issues-modal" class="hidden fixed inset-0 bg-black/50 z-50">
+        <div class="relative bg-white max-w-2xl mx-auto mt-20 p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Find These Issues!</h2>
+                <button id="close-modal" class="text-2xl">&times;</button>
+            </div>
+            <div id="issues-list" class="space-y-4 max-h-[60vh] overflow-y-auto">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Add this inside the <script> tags
+    const WCAG_VIOLATIONS = {
+    perceivable: [
+        {
+            id: 'p1',
+            description: 'Missing alt text on hero image',
+            category: 'WCAG 1.1.1',
+            points: 1,
+            hint: 'Check the main banner image for text alternatives'
+        },
+        {
+            id: 'p2',
+            description: 'Low contrast text in header',
+            category: 'WCAG 1.4.3',
+            points: 2,
+            hint: 'Look at the color contrast of the main heading'
+        },
+        {
+            id: 'p3',
+            description: 'Information conveyed by color alone',
+            category: 'WCAG 1.4.1',
+            points: 1,
+            hint: 'Check how package status is indicated'
+        }
+        // Add remaining perceivable issues...
+    ],
+    operable: [
+        {
+            id: 'o1',
+            description: 'Flashing content in banner',
+            category: 'WCAG 2.3.1',
+            points: 3,
+            hint: 'Look for rapidly flashing promotional content'
+        },
+        {
+            id: 'o2',
+            description: 'Keyboard trap in navigation',
+            category: 'WCAG 2.1.2',
+            points: 2,
+            hint: 'Try navigating the menu with keyboard only'
+        },
+        {
+            id: 'o3',
+            description: 'Small click targets',
+            category: 'WCAG 2.5.5',
+            points: 1,
+            hint: 'Check the size of interactive elements'
+        },
+        {
+            id: 'o4',
+            description: 'No mechanism to pause scrolling content',
+            category: 'WCAG 2.2.2',
+            points: 2,
+            hint: 'Look at the testimonials section'
+        }
+        // Add remaining operable issues...
+    ],
+    understandable: [
+        {
+            id: 'u1',
+            description: 'Missing language declaration',
+            category: 'WCAG 3.1.1',
+            points: 1,
+            hint: 'Check the HTML root element for language information'
+        },
+        {
+            id: 'u2',
+            description: 'Inconsistent navigation order',
+            category: 'WCAG 3.2.3',
+            points: 2,
+            hint: 'Compare navigation elements across different sections'
+        },
+        {
+            id: 'u3',
+            description: 'Missing form labels',
+            category: 'WCAG 3.3.2',
+            points: 1,
+            hint: 'Check the booking form input fields'
+        },
+        {
+            id: 'u4',
+            description: 'Unexpected form submission',
+            category: 'WCAG 3.2.2',
+            points: 2,
+            hint: 'Look for forms that submit without user confirmation'
+        },
+        {
+            id: 'u5',
+            description: 'No error identification',
+            category: 'WCAG 3.3.1',
+            points: 2,
+            hint: 'Try submitting the form with errors'
+        },
+        {
+            id: 'u6',
+            description: 'Unclear button purpose',
+            category: 'WCAG 3.3.2',
+            points: 1,
+            hint: 'Check if button functions are clear from their labels'
+        },
+        {
+            id: 'u7',
+            description: 'Inconsistent form labels',
+            category: 'WCAG 3.2.4',
+            points: 1,
+            hint: 'Compare similar form fields across different sections'
+        },
+        {
+            id: 'u8',
+            description: 'Complex instructions',
+            category: 'WCAG 3.3.2',
+            points: 2,
+            hint: 'Look for unclear or complicated booking instructions'
+        },
+        {
+            id: 'u9',
+            description: 'No error prevention',
+            category: 'WCAG 3.3.4',
+            points: 3,
+            hint: 'Check if important actions can be reversed or confirmed'
+        },
+        {
+            id: 'u10',
+            description: 'Unpredictable interface changes',
+            category: 'WCAG 3.2.1',
+            points: 2,
+            hint: 'Look for content that changes without user action'
+        }
+    ],
+    robust: [
+        {
+            id: 'r1',
+            description: 'Invalid HTML attributes',
+            category: 'WCAG 4.1.1',
+            points: 1,
+            hint: 'Check for incorrect HTML usage in the footer'
+        },
+        {
+            id: 'r2',
+            description: 'Missing ARIA labels',
+            category: 'WCAG 4.1.2',
+            points: 2,
+            hint: 'Look for custom controls without proper ARIA attributes'
+        },
+        {
+            id: 'r3',
+            description: 'Incomplete form field relationships',
+            category: 'WCAG 4.1.2',
+            points: 2,
+            hint: 'Check form field associations with their labels'
+        },
+        {
+            id: 'r4',
+            description: 'Status message not announced',
+            category: 'WCAG 4.1.3',
+            points: 2,
+            hint: 'Look for important updates that screen readers might miss'
+        },
+        {
+            id: 'r5',
+            description: 'Duplicate IDs used',
+            category: 'WCAG 4.1.1',
+            points: 1,
+            hint: 'Check for repeated ID attributes'
+        },
+        {
+            id: 'r6',
+            description: 'Improper ARIA usage',
+            category: 'WCAG 4.1.2',
+            points: 3,
+            hint: 'Look for incorrect ARIA role implementations'
+        },
+        {
+            id: 'r7',
+            description: 'Name/Role/Value not provided',
+            category: 'WCAG 4.1.2',
+            points: 2,
+            hint: 'Check custom elements for proper accessibility properties'
+        },
+        {
+            id: 'r8',
+            description: 'Parsing errors in markup',
+            category: 'WCAG 4.1.1',
+            points: 1,
+            hint: 'Look for malformed HTML elements'
+        },
+        {
+            id: 'r9',
+            description: 'Custom controls without states',
+            category: 'WCAG 4.1.2',
+            points: 2,
+            hint: 'Check if custom interactive elements expose their states'
+        },
+        {
+            id: 'r10',
+            description: 'Non-standard element interaction',
+            category: 'WCAG 4.1.2',
+            points: 2,
+            hint: 'Look for elements that don\'t follow platform conventions'
+        }
+    ]
+};
+
+// Game State Management
+const gameState = {
+    score: 0,
+    hintsLeft: 3,
+    foundIssues: new Set(),
+
+    findIssue(id) {
+        if (this.foundIssues.has(id)) return false;
+        
+        const issue = Object.values(WCAG_VIOLATIONS)
+            .flat()
+            .find(issue => issue.id === id);
+            
+        if (!issue) return false;
+
+        this.foundIssues.add(id);
+        this.score += issue.points;
+        this.updateUI();
+        return true;
+    },
+
+    useHint() {
+        if (this.hintsLeft <= 0) return false;
+        this.hintsLeft--;
+        this.updateUI();
+        return true;
+    },
+
+    updateUI() {
+        document.getElementById('score').textContent = this.score;
+        document.getElementById('hints-left').textContent = this.hintsLeft;
+        
+        // Update category counts
+        ['p', 'o', 'u', 'r'].forEach(type => {
+            const count = [...this.foundIssues].filter(id => id.startsWith(type)).length;
+            document.getElementById(`${type}-found`).textContent = count;
+        });
+    }
+};
+
+// Modal Management
+const modalManager = {
+    init() {
+        document.getElementById('show-checklist').addEventListener('click', () => this.show());
+        document.getElementById('close-modal').addEventListener('click', () => this.hide());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') this.hide();
+        });
+    },
+
+    show() {
+        document.getElementById('issues-modal').classList.remove('hidden');
+        this.updateList();
+    },
+
+    hide() {
+        document.getElementById('issues-modal').classList.add('hidden');
+    },
+
+    updateList() {
+        const container = document.getElementById('issues-list');
+        container.innerHTML = '';
+
+        Object.entries(WCAG_VIOLATIONS).forEach(([category, issues]) => {
+            const section = document.createElement('div');
+            section.className = 'mb-6';
+            section.innerHTML = `
+                <h3 class="font-bold text-lg mb-2">${category.toUpperCase()}</h3>
+                <div class="space-y-2">
+                    ${issues.map(issue => `
+                        <div class="flex items-start gap-2 p-2 ${gameState.foundIssues.has(issue.id) ? 'bg-green-50' : 'bg-gray-50'} rounded">
+                            <input 
+                                type="checkbox" 
+                                id="${issue.id}" 
+                                ${gameState.foundIssues.has(issue.id) ? 'checked disabled' : ''}
+                                class="mt-1">
+                            <div class="flex-1">
+                                <label for="${issue.id}" class="block font-medium">
+                                    ${issue.description}
+                                </label>
+                                <div class="text-sm text-gray-500">${issue.category}</div>
+                            </div>
+                            ${!gameState.foundIssues.has(issue.id) ? `
+                                <button 
+                                    onclick="showHint('${issue.id}')"
+                                    class="text-sm text-indigo-600 hover:text-indigo-800">
+                                    Hint
+                                </button>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(section);
+        });
+
+        this.addCheckboxListeners();
+    },
+
+    addCheckboxListeners() {
+        document.querySelectorAll('#issues-list input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', e => {
+                if (e.target.checked) {
+                    if (gameState.findIssue(e.target.id)) {
+                        showToast('Issue found! +' + 
+                            WCAG_VIOLATIONS[e.target.id[0] + 's']
+                                .find(i => i.id === e.target.id).points + 
+                            ' points');
+                    }
+                }
+            });
+        });
+    }
+};
+
+// Helper Functions
+function showHint(issueId) {
+    if (!gameState.useHint()) {
+        showToast('No hints remaining!', 'warning');
+        return;
+    }
+
+    const issue = Object.values(WCAG_VIOLATIONS)
+        .flat()
+        .find(i => i.id === issueId);
+    
+    if (issue) {
+        showToast(issue.hint, 'info');
+    }
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `fixed bottom-4 left-1/2 transform -translate-x-1/2 
+        px-4 py-2 rounded-lg shadow-lg text-white
+        ${type === 'warning' ? 'bg-yellow-500' : 
+          type === 'info' ? 'bg-blue-600' : 'bg-green-600'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    modalManager.init();
+    gameState.updateUI();
+});    </script>
+</body>
+</html>

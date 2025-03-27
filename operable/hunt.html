@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Operable Hunt | Learn Accessibility</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .flashing {
+            animation: flash 0.2s infinite;
+        }
+        .auto-dismiss {
+            animation: fadeOut 5s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .flashing, .auto-dismiss {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<header class="absolute inset-x-0 top-0 z-50">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+            <a href="/" class="-m-1.5 p-1.5">
+                <span class="sr-only">WCAG Examples</span>
+                <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="WCAG Logo">
+            </a>
+        </div>
+        <div class="flex lg:hidden">
+            <button 
+                type="button" 
+                class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                aria-expanded="false"
+                aria-controls="mobile-menu">
+                <span class="sr-only">Open main menu</span>
+                <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+            <a href="/perceivable" class="text-sm/6 font-semibold text-gray-900">Perceivable</a>
+            <a href="/operable" class="text-sm/6 font-semibold text-gray-900 border-b-2 border-indigo-600">Operable</a>
+            <a href="/understandable" class="text-sm/6 font-semibold text-gray-900">Understandable</a>
+            <a href="/robust" class="text-sm/6 font-semibold text-gray-900">Robust</a>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 z-50"></div>
+        <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
+                <a href="#" class="-m-1.5 p-1.5">
+                    <span class="sr-only">WCAG Examples</span>
+                    <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="WCAG Logo">
+                </a>
+                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" aria-label="Close menu">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-6 flow-root">
+                <div class="-my-6 divide-y divide-gray-500/10">
+                    <div class="space-y-2 py-6">
+                        <a href="/perceivable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Perceivable</a>
+                        <a href="/operable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 bg-gray-50">Operable</a>
+                        <a href="/understandable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Understandable</a>
+                        <a href="/robust" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Robust</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<body class="min-h-screen bg-gray-100">
+    <!-- Game Stats -->
+    <div class="fixed top-4 left-4 bg-white p-4 rounded-lg shadow-lg space-y-2">
+        <div class="text-lg font-bold">Score: <span id="current-score">0</span></div>
+        <div class="text-sm text-gray-600">Found: <span id="found-count">0</span>/<span id="total-count">0</span></div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Demo Website with Issues -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <!-- 1. Keyboard Accessibility Issues -->
+        <section class="mb-12">
+            <div onclick="handleClick()" class="cursor-pointer p-4 bg-white rounded-lg">
+                Non-keyboard accessible element (click only)
+            </div>
+            <a href="#" style="outline: none" class="block mt-4 text-blue-600">
+                Link without focus indicator
+            </a>
+        </section>
+
+        <!-- 2. Timing Issues -->
+        <section class="mb-12">
+            <div class="auto-dismiss bg-yellow-100 p-4 rounded">
+                This message will disappear without user control
+            </div>
+            <div class="timeout bg-white p-4 rounded-lg mt-4">
+                <form>
+                    <input type="text" placeholder="Form with sudden timeout">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 3. Motion & Seizure Issues -->
+        <section class="mb-12">
+            <div class="flashing bg-purple-500 text-white p-4 rounded-lg">
+                Rapidly flashing content
+            </div>
+            <div class="animation mt-4 bg-blue-500 text-white p-4 rounded-lg">
+                Auto-playing content without controls
+            </div>
+        </section>
+
+        <!-- 4. Navigation Issues -->
+        <section class="mb-12">
+            <div class="bg-white p-4 rounded-lg">
+                <h1 class="hidden">Hidden page title</h1>
+                <p>Content without proper heading structure</p>
+            </div>
+        </section>
+
+        <!-- 5. Input Issues -->
+        <section class="mb-12">
+            <button class="small w-6 h-6 bg-blue-500 text-white rounded">
+                Tiny
+            </button>
+            <div onmousedown="startDrag()" class="mt-4 p-4 bg-gray-100 rounded">
+                Mouse-only drag interaction
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Controls -->
+    <div class="fixed bottom-4 right-4 flex gap-4">
+        <button id="hint-button" class="px-4 py-2 bg-green-600 text-white rounded-lg">
+            Need a Hint?
+        </button>
+        <button id="check-issues" class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+            Check Issues
+        </button>
+    </div>
+
+    <!-- Issues Modal -->
+    <div id="issues-modal" class="hidden fixed inset-0 z-50" role="dialog" aria-labelledby="modal-title">
+        <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between p-6 border-b">
+                    <h2 id="modal-title" class="text-2xl font-bold">Operable Issues</h2>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-500">×</button>
+                </div>
+                <div class="overflow-y-auto p-6">
+                    <div id="issues-list" class="space-y-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const ACCESSIBILITY_ISSUES = {
+    keyboard: [
+        {
+            id: 'key-1',
+            selector: '[onclick]:not(button)',
+            issue: 'Non-keyboard accessible controls',
+            hint: 'Interactive elements should be keyboard accessible',
+            category: 'WCAG 2.1.1',
+            difficulty: 'medium'
+        },
+        {
+            id: 'key-2',
+            selector: 'a[href="#"]:not([role])',
+            issue: 'Missing keyboard focus indicators',
+            hint: 'Interactive elements need visible focus states',
+            category: 'WCAG 2.4.7',
+            difficulty: 'easy'
+        }
+    ],
+    timing: [
+        {
+            id: 'time-1',
+            selector: '.auto-dismiss',
+            issue: 'Content disappears automatically',
+            hint: 'Users need control over timing',
+            category: 'WCAG 2.2.1',
+            difficulty: 'medium'
+        },
+        {
+            id: 'time-2',
+            selector: '.timeout',
+            issue: 'No warning before session timeout',
+            hint: 'Users should be warned before timing out',
+            category: 'WCAG 2.2.6',
+            difficulty: 'hard'
+        }
+    ],
+    motion: [
+        {
+            id: 'motion-1',
+            selector: '.animation:not([aria-controls])',
+            issue: 'No controls for moving content',
+            hint: 'Users need ability to pause movement',
+            category: 'WCAG 2.2.2',
+            difficulty: 'medium'
+        },
+        {
+            id: 'motion-2',
+            selector: '.flashing',
+            issue: 'Content flashes more than 3 times/second',
+            hint: 'Avoid content that could trigger seizures',
+            category: 'WCAG 2.3.1',
+            difficulty: 'hard'
+        }
+    ],
+    navigation: [
+        {
+            id: 'nav-1',
+            selector: 'main:not([id])',
+            issue: 'Missing skip navigation link',
+            hint: 'Users need way to bypass repeated blocks',
+            category: 'WCAG 2.4.1',
+            difficulty: 'easy'
+        },
+        {
+            id: 'nav-2',
+            selector: 'h1.hidden',
+            issue: 'No visible page title in viewport',
+            hint: 'Page needs visible title that appears first',
+            category: 'WCAG 2.4.2',
+            difficulty: 'medium'
+        }
+    ],
+    input: [
+        {
+            id: 'input-1',
+            selector: 'button.small',
+            issue: 'Target size too small',
+            hint: 'Touch targets need adequate size',
+            category: 'WCAG 2.5.5',
+            difficulty: 'easy'
+        },
+        {
+            id: 'input-2',
+            selector: '[onmousedown]',
+            issue: 'Functionality requires complex gestures',
+            hint: 'Actions should work with simple interactions',
+            category: 'WCAG 2.5.1',
+            difficulty: 'medium'
+        }
+    ]
+};
+
+const gameState = {
+    score: 0,
+    foundIssues: new Set(),
+    hintsUsed: 0,
+    lastActiveElement: null,
+
+    get totalIssues() {
+        return Object.values(ACCESSIBILITY_ISSUES).flat().length;
+    },
+
+    updateUI() {
+        document.getElementById('current-score').textContent = this.score;
+        document.getElementById('found-count').textContent = this.foundIssues.size;
+        document.getElementById('total-count').textContent = this.totalIssues;
+        
+        const progress = (this.foundIssues.size / this.totalIssues) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+};
+
+const modalManager = {
+    init() {
+        const modal = document.getElementById('issues-modal');
+        const closeButton = document.getElementById('close-modal');
+        const checkButton = document.getElementById('check-issues');
+
+        checkButton.addEventListener('click', () => {
+            this.show();
+            this.updateIssuesList();
+        });
+
+        closeButton.addEventListener('click', () => this.hide());
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) this.hide();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                this.hide();
+            }
+        });
+    },
+
+    show() {
+        const modal = document.getElementById('issues-modal');
+        modal.classList.remove('hidden');
+        document.getElementById('close-modal').focus();
+        document.body.style.overflow = 'hidden';
+        gameState.lastActiveElement = document.activeElement;
+    },
+
+    hide() {
+        const modal = document.getElementById('issues-modal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (gameState.lastActiveElement) {
+            gameState.lastActiveElement.focus();
+        }
+    },
+
+    updateIssuesList() {
+        const container = document.getElementById('issues-list');
+        container.innerHTML = '';
+
+        Object.entries(ACCESSIBILITY_ISSUES).forEach(([category, issues]) => {
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'mb-6';
+            categoryElement.innerHTML = `
+                <h3 class="text-lg font-semibold mb-4">${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                <div class="space-y-3">
+                    ${issues.map(issue => `
+                        <div class="flex items-start gap-4 p-4 rounded-lg ${gameState.foundIssues.has(issue.id) ? 'bg-green-50' : 'bg-gray-50'}">
+                            <input 
+                                type="checkbox" 
+                                id="${issue.id}"
+                                ${gameState.foundIssues.has(issue.id) ? 'checked disabled' : ''}
+                                class="mt-1 h-4 w-4 text-indigo-600 rounded">
+                            <div class="flex-1">
+                                <label for="${issue.id}" class="text-gray-900 font-medium">${issue.issue}</label>
+                                <p class="text-sm text-gray-500 mt-1">${issue.category}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(categoryElement);
+        });
+
+        this.addCheckboxListeners();
+    },
+
+    addCheckboxListeners() {
+        document.querySelectorAll('#issues-list input[type="checkbox"]:not([disabled])').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    handleIssueFound(e.target.id);
+                }
+            });
+        });
+    }
+};
+
+// Add animation controls
+const flashingContent = document.querySelector('.flashing');
+const pauseButton = document.createElement('button');
+pauseButton.className = 'mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none';
+pauseButton.textContent = 'Pause Animation';
+pauseButton.addEventListener('click', () => {
+    const isAnimating = !flashingContent.classList.contains('animate-none');
+    flashingContent.classList.toggle('animate-none');
+    pauseButton.textContent = isAnimating ? 'Resume Animation' : 'Pause Animation';
+});
+flashingContent.parentNode.insertBefore(pauseButton, flashingContent.nextSibling);
+
+// Initialize the game
+document.addEventListener('DOMContentLoaded', () => {
+    modalManager.init();
+    gameState.updateUI();
+});
+
+function handleIssueFound(issueId) {
+    if (gameState.foundIssues.has(issueId)) return;
+
+    const issue = findIssueById(issueId);
+    if (!issue) return;
+
+    gameState.foundIssues.add(issueId);
+    const points = issue.difficulty === 'hard' ? 3 : issue.difficulty === 'medium' ? 2 : 1;
+    gameState.score += points;
+    gameState.updateUI();
+    
+    showToast(`Found issue! +${points} points`);
+}
+
+function findIssueById(id) {
+    return Object.values(ACCESSIBILITY_ISSUES)
+        .flat()
+        .find(issue => issue.id === id);
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// Rest of your existing JavaScript (gameState, modalManager, etc.)
+// ...existing code...
+
+</script>
+</body>
+</html>

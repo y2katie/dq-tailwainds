@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Operable Examples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .reduced-motion {
+            animation: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Skip Link -->
+    <a href="#main-content" 
+        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:p-4 focus:bg-white focus:z-[60] focus:rounded-lg focus:shadow-lg">
+        Skip to main content
+    </a>
+
+    <!-- Navigation -->
+    <header class="absolute inset-x-0 top-0 z-50">
+        <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <div class="flex lg:flex-1">
+                <a href="/" class="-m-1.5 p-1.5">
+                    <span class="sr-only">WCAG Examples</span>
+                    <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="WCAG Logo">
+                </a>
+            </div>
+            <div class="flex lg:hidden">
+                <button 
+                    type="button" 
+                    class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden lg:flex lg:gap-x-12">
+                <a href="/perceivable" class="text-sm/6 font-semibold text-gray-900">Perceivable</a>
+                <a href="/operable" class="text-sm/6 font-semibold text-gray-900 border-b-2 border-indigo-600">Operable</a>
+                <a href="/understandable" class="text-sm/6 font-semibold text-gray-900">Understandable</a>
+                <a href="/robust" class="text-sm/6 font-semibold text-gray-900">Robust</a>
+            </div>
+        </nav>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 z-50"></div>
+            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="-m-1.5 p-1.5">
+                        <span class="sr-only">WCAG Examples</span>
+                        <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="WCAG Logo">
+                    </a>
+                    <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" aria-label="Close menu">
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mt-6 flow-root">
+                    <div class="-my-6 divide-y divide-gray-500/10">
+                        <div class="space-y-2 py-6">
+                            <a href="/perceivable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Perceivable</a>
+                            <a href="/operable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 bg-gray-50">Operable</a>
+                            <a href="/understandable" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Understandable</a>
+                            <a href="/robust" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Robust</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="pt-20 px-6">
+        <!-- Introduction -->
+        <div class="max-w-7xl mx-auto mb-16">
+            <h1 class="text-4xl font-bold mb-4">WCAG Operable Principle Examples</h1>
+            <p class="text-lg text-gray-600 mb-8">
+                The Operable principle requires that user interface components and navigation must be operable.
+                Users must be able to operate the interface regardless of their input method or abilities.
+            </p>
+        </div>
+
+        <!-- 1. Keyboard Accessibility -->
+        <section class="max-w-7xl mx-auto mb-16" aria-labelledby="keyboard-heading">
+            <h2 id="keyboard-heading" class="text-2xl font-bold mb-6">1. Keyboard Accessibility (2.1)</h2>
+            
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-red-600">❌ Non-Keyboard Accessible</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="cursor-pointer p-4 bg-gray-100 rounded" id="mouse-only">
+                        Hover me (mouse only)
+                        <div class="hidden mt-2 p-2 bg-gray-200 rounded">Tooltip content (not keyboard accessible)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-green-600">✅ Keyboard Accessible</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button 
+                        class="px-4 py-2 bg-blue-600 text-white rounded focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors"
+                        id="keyboard-button">
+                        Interactive Button (keyboard & mouse)
+                    </button>
+                    <p class="mt-2 text-sm text-gray-600">Try using Tab to focus and Enter/Space to activate</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Enough Time -->
+        <section class="max-w-7xl mx-auto mb-16" aria-labelledby="timing-heading">
+            <h2 id="timing-heading" class="text-2xl font-bold mb-6">2. Enough Time (2.2)</h2>
+            
+            <!-- Session Timeout Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4">Session Timeout Example</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-between" id="session-demo">
+                        <p>Session status: <span class="font-medium text-green-600">Active</span></p>
+                        <button 
+                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            onclick="extendSession()">
+                            Extend Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Seizures and Physical Reactions -->
+        <section class="max-w-7xl mx-auto mb-16" aria-labelledby="seizure-heading">
+            <h2 id="seizure-heading" class="text-2xl font-bold mb-6">3. Seizures and Physical Reactions (2.3)</h2>
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Animation Controls</h3>
+                    <button 
+                        id="toggle-motion"
+                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        Reduce Motion
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="animation-demo" class="p-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg transition-transform hover:scale-105">
+                        Hover for animation
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Navigable -->
+        <section class="max-w-7xl mx-auto mb-16" aria-labelledby="navigation-heading">
+            <h2 id="navigation-heading" class="text-2xl font-bold mb-6">4. Navigable (2.4)</h2>
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <nav aria-label="Breadcrumb" class="mb-4">
+                    <ol class="flex space-x-2">
+                        <li><a href="/" class="text-blue-600 hover:underline">Home</a></li>
+                        <li aria-hidden="true">/</li>
+                        <li><a href="/operable" class="text-blue-600 hover:underline">Operable</a></li>
+                    </ol>
+                </nav>
+                <div class="prose max-w-none">
+                    <h3 class="text-lg font-semibold mb-4">Page Structure Example</h3>
+                    <p>This page uses proper heading hierarchy and semantic HTML for better navigation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Input Modalities -->
+        <section class="max-w-7xl mx-auto mb-16" aria-labelledby="input-heading">
+            <h2 id="input-heading" class="text-2xl font-bold mb-6">5. Input Modalities (2.5)</h2>
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Target Size Examples</h3>
+                <div class="space-y-8">
+                    <!-- Bad Example -->
+                    <div>
+                        <h4 class="text-red-600 mb-2">❌ Too Small (Hard to Target)</h4>
+                        <div class="flex gap-2">
+                            <button class="w-6 h-6 bg-red-500 text-white text-xs flex items-center justify-center">
+                                1
+                            </button>
+                            <button class="w-6 h-6 bg-red-500 text-white text-xs flex items-center justify-center">
+                                2
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Good Example -->
+                    <div>
+                        <h4 class="text-green-600 mb-2">✅ Proper Size (Easy to Target)</h4>
+                        <div class="flex gap-4">
+                            <button class="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center text-lg transition-all hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:outline-none">
+                                1
+                            </button>
+                            <button class="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center text-lg transition-all hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:outline-none">
+                                2
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+
+    <script>
+        // Mobile Menu
+        const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuButton = mobileMenu.querySelector('button[aria-label="Close menu"]');
+
+        function toggleMobileMenu() {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            document.body.style.overflow = isExpanded ? '' : 'hidden';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        closeMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // Keyboard Demo
+        const keyboardButton = document.getElementById('keyboard-button');
+        keyboardButton.addEventListener('click', handleInteraction);
+        keyboardButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleInteraction(e);
+            }
+        });
+
+        function handleInteraction(e) {
+            const button = e.target;
+            button.classList.add('bg-green-600');
+            button.textContent = 'Activated!';
+            
+            setTimeout(() => {
+                button.classList.remove('bg-green-600');
+                button.textContent = 'Interactive Button (keyboard & mouse)';
+            }, 1000);
+        }
+
+        // Session Timeout Demo
+        let sessionTimeout;
+        let warningTimeout;
+
+        function startSessionTimer() {
+            clearTimeout(sessionTimeout);
+            clearTimeout(warningTimeout);
+            
+            // Show warning after 20 seconds
+            warningTimeout = setTimeout(() => {
+                showToast('Session will expire in 10 seconds', 'warning');
+            }, 20000);
+
+            // End session after 30 seconds
+            sessionTimeout = setTimeout(() => {
+                document.querySelector('#session-demo span').textContent = 'Expired';
+                document.querySelector('#session-demo span').classList.remove('text-green-600');
+                document.querySelector('#session-demo span').classList.add('text-red-600');
+                showToast('Session expired', 'error');
+            }, 30000);
+        }
+
+        function extendSession() {
+            document.querySelector('#session-demo span').textContent = 'Active';
+            document.querySelector('#session-demo span').classList.add('text-green-600');
+            document.querySelector('#session-demo span').classList.remove('text-red-600');
+            startSessionTimer();
+            showToast('Session extended', 'success');
+        }
+
+        // Animation Controls
+        const toggleMotionButton = document.getElementById('toggle-motion');
+        const animationDemo = document.getElementById('animation-demo');
+
+        toggleMotionButton.addEventListener('click', () => {
+            document.body.classList.toggle('reduced-motion');
+            toggleMotionButton.textContent = document.body.classList.contains('reduced-motion') 
+                ? 'Enable Motion' 
+                : 'Reduce Motion';
+            showToast(
+                document.body.classList.contains('reduced-motion')
+                    ? 'Animations disabled'
+                    : 'Animations enabled',
+                'info'
+            );
+        });
+
+        // Toast Notifications
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `mb-4 p-4 rounded-lg shadow-lg text-white transition-opacity duration-300
+                ${type === 'error' ? 'bg-red-500' : ''}
+                ${type === 'success' ? 'bg-green-600' : ''}
+                ${type === 'warning' ? 'bg-yellow-500' : ''}
+                ${type === 'info' ? 'bg-blue-600' : ''}`;
+            toast.textContent = message;
+            
+            const container = document.getElementById('toast-container');
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize
+        startSessionTimer();
+    </script>
+</body>
+</html>
