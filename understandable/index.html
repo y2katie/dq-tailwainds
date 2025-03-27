@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Understandable Examples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Navigation with Consistency Issues -->
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4" aria-label="Main">
+            <!-- Bad Example: Inconsistent Navigation -->
+            <div class="border-b border-gray-200 mb-4">
+                <div class="flex justify-between py-4">
+                    <a href="/" class="text-xl font-bold">WCAG Examples</a>
+                    <div class="space-x-4">
+                        <a href="/home">Home</a>
+                        <a href="/about-us">About</a>
+                        <a href="/contact-form">Get in Touch</a> <!-- Inconsistent labeling -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example: Consistent Navigation -->
+            <div class="py-4">
+                <div class="flex justify-between items-center">
+                    <a href="/" class="text-xl font-bold">WCAG Examples</a>
+                    <nav aria-label="Main" class="space-x-6">
+                        <a href="/home" class="hover:text-blue-600">Home</a>
+                        <a href="/about" class="hover:text-blue-600">About</a>
+                        <a href="/contact" class="hover:text-blue-600">Contact</a>
+                    </nav>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Understanding WCAG 3.0 - Understandable Principle</h1>
+
+        <!-- Section 1: Form Input Examples -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">1. Form Input Examples</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Unclear Requirements</h3>
+                <form class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <!-- No clear requirements -->
+                        <input type="text" class="w-full p-2 border rounded" placeholder="Enter name">
+                        
+                        <!-- Unclear error state -->
+                        <input 
+                            type="email" 
+                            class="w-full p-2 border rounded border-red-500"
+                            value="invalid">
+                        
+                        <!-- No error message -->
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Clear Instructions</h3>
+                <form class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <!-- Clear label and requirements -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-1">
+                                Full Name <span class="text-red-500" aria-hidden="true">*</span>
+                            </label>
+                            <span id="name-description" class="text-sm text-gray-500">
+                                Enter your first and last name
+                            </span>
+                            <input 
+                                type="text" 
+                                id="name"
+                                class="mt-1 w-full p-2 border rounded"
+                                aria-describedby="name-description"
+                                required>
+                        </div>
+
+                        <!-- Clear error state and message -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-1">
+                                Email Address <span class="text-red-500" aria-hidden="true">*</span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                class="w-full p-2 border rounded border-red-500"
+                                aria-describedby="email-error"
+                                aria-invalid="true">
+                            <p id="email-error" class="mt-1 text-sm text-red-600">
+                                Please enter a valid email address
+                            </p>
+                        </div>
+
+                        <button 
+                            type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            aria-describedby="submit-help">
+                            Submit Form
+                        </button>
+                        <p id="submit-help" class="text-sm text-gray-500">
+                            All fields marked with <span class="text-red-500">*</span> are required
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Section 2: Content Changes -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">2. Content Changes</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Unexpected Changes</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <!-- Auto-redirect -->
+                    <div class="mb-4">
+                        <p>Page will redirect in 5 seconds...</p>
+                    </div>
+
+                    <!-- Automatic form submission -->
+                    <select onchange="this.form.submit()" class="w-full p-2 border rounded">
+                        <option>Select an option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Predictable Changes</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <!-- User-initiated changes -->
+                    <div class="mb-4">
+                        <p>You will be redirected after clicking the button below</p>
+                        <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded">
+                            Continue to Next Page
+                        </button>
+                    </div>
+
+                    <!-- Two-step form submission -->
+                    <form class="mt-4">
+                        <select class="w-full p-2 border rounded mb-2">
+                            <option>Select an option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
+                            Apply Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Error Prevention -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">3. Error Prevention</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - No Error Prevention</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <form>
+                        <!-- No validation -->
+                        <input 
+                            type="text" 
+                            placeholder="Enter phone"
+                            class="w-full p-2 border rounded mb-4">
+
+                        <!-- No confirmation -->
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">
+                            Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Error Prevention</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <form id="delete-form">
+                        <!-- Input validation -->
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium mb-1">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone"
+                                pattern="[0-9]{10}"
+                                class="w-full p-2 border rounded"
+                                aria-describedby="phone-help">
+                            <p id="phone-help" class="mt-1 text-sm text-gray-500">
+                                Enter 10-digit phone number
+                            </p>
+                        </div>
+
+                        <!-- Confirmation step -->
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" required class="mr-2">
+                                <span>I understand this action cannot be undone</span>
+                            </label>
+                        </div>
+
+                        <button 
+                            type="submit"
+                            class="px-4 py-2 bg-red-600 text-white rounded"
+                            data-confirm="Are you sure you want to delete your account?">
+                            Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- Section 4: Language Usage -->
+<section class="mb-12">
+    <h2 class="text-2xl font-bold mb-6">4. Language Declaration</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Mixed Languages</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p>Welcome to our store!</p>
+            <p>Bienvenue dans notre magasin!</p>
+            <p>¡Bienvenido a nuestra tienda!</p>
+            <!-- No language declarations -->
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Proper Language Markup</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p>Welcome to our store!</p>
+            <p lang="fr">Bienvenue dans notre magasin!</p>
+            <p lang="es">¡Bienvenido a nuestra tienda!</p>
+            <div class="mt-4 text-sm text-gray-500">
+                Available in: 
+                <button class="underline" lang="en">English</button> |
+                <button class="underline" lang="fr">Français</button> |
+                <button class="underline" lang="es">Español</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5: Consistent Identification -->
+<section class="mb-12">
+    <h2 class="text-2xl font-bold mb-6">5. Consistent Component Identification</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Inconsistent Components</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <h4>Section 1</h4>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded">
+                        Click Here
+                    </button>
+                </div>
+                <div>
+                    <h4>Section 2</h4>
+                    <button class="text-blue-600 underline">
+                        Press to Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Consistent Components</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <h4 class="text-lg font-medium mb-2">Section 1</h4>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Continue to Details
+                    </button>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium mb-2">Section 2</h4>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Continue to Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Input Assistance -->
+<section class="mb-12">
+    <h2 class="text-2xl font-bold mb-6">6. Input Assistance</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - No Input Help</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <form>
+                <div class="space-y-4">
+                    <input 
+                        type="text" 
+                        class="w-full p-2 border rounded" 
+                        placeholder="Enter password">
+                    
+                    <select class="w-full p-2 border rounded">
+                        <option value="">Select type</option>
+                        <option value="1">Type A</option>
+                        <option value="2">Type B</option>
+                    </select>
+
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Helpful Input Assistance</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <form>
+                <div class="space-y-4">
+                    <div>
+                        <label for="password" class="block text-sm font-medium mb-1">
+                            Create Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password"
+                            class="w-full p-2 border rounded"
+                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                            aria-describedby="password-help"
+                            required>
+                        <ul id="password-help" class="mt-2 text-sm text-gray-600 list-disc pl-5">
+                            <li>At least 8 characters long</li>
+                            <li>Include at least one letter and one number</li>
+                            <li>No special characters allowed</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <label for="account-type" class="block text-sm font-medium mb-1">
+                            Account Type
+                        </label>
+                        <select 
+                            id="account-type" 
+                            class="w-full p-2 border rounded"
+                            aria-describedby="type-help"
+                            required>
+                            <option value="">Select account type</option>
+                            <option value="personal">Personal Account</option>
+                            <option value="business">Business Account</option>
+                        </select>
+                        <p id="type-help" class="mt-2 text-sm text-gray-600">
+                            Choose 'Business Account' if you're registering on behalf of a company
+                        </p>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <script>
+        // Form validation and error handling
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Check for confirmation dialog
+                const button = e.submitter;
+                if (button.dataset.confirm) {
+                    if (!confirm(button.dataset.confirm)) {
+                        return;
+                    }
+                }
+
+                // Validate form
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                // Show success message
+                alert('Form submitted successfully!');
+            });
+        });
+    </script>
+</body>
+</html>

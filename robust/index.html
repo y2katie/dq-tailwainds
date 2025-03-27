@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Robust Examples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Understanding WCAG 4.0 - Robust Principle</h1>
+
+        <!-- 1. Valid Markup Structure -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">1. Valid HTML Structure (4.1.1)</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Invalid HTML</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <!-- Unclosed tags -->
+                        <div>
+                            <h4>Incomplete Structure
+                        </div>
+
+                        <!-- Invalid nesting -->
+                        <p>
+                            <div>Invalid nesting structure</div>
+                        </p>
+
+                        <!-- Made-up elements -->
+                        <custom-element>Invalid element</custom-element>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Valid HTML</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <article>
+                            <h4 class="text-lg font-medium">Proper Structure</h4>
+                            <p>Content with valid nesting</p>
+                        </article>
+
+                        <aside class="bg-gray-50 p-4 rounded">
+                            <h4 class="text-lg font-medium">Related Info</h4>
+                            <p>Secondary content</p>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Name, Role, Value -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">2. Proper ARIA Implementation (4.1.2)</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Missing ARIA</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div 
+                        class="flex items-center p-2 bg-blue-100 rounded cursor-pointer"
+                        onclick="toggleContent()">
+                        <span>▼</span>
+                        <div>Click to expand</div>
+                    </div>
+                    <div class="hidden mt-2">
+                        Hidden content
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Proper ARIA</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <button 
+                        class="flex items-center p-2 bg-blue-100 rounded w-full"
+                        aria-expanded="false"
+                        aria-controls="expandable-content">
+                        <span aria-hidden="true">▼</span>
+                        <span class="ml-2">Expandable Section</span>
+                    </button>
+                    <div 
+                        id="expandable-content"
+                        class="hidden mt-2"
+                        role="region">
+                        Expanded content
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Status Messages -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">3. Status Updates (4.1.3)</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Silent Updates</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <div class="text-green-500">Item added to cart</div>
+                        <div class="text-red-500">Error occurred</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - ARIA Live Regions</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="space-y-4">
+                        <div 
+                            role="status" 
+                            aria-live="polite"
+                            class="p-2 bg-green-100 text-green-800 rounded">
+                            Item successfully added to cart
+                        </div>
+                        <div 
+                            role="alert"
+                            class="p-2 bg-red-100 text-red-800 rounded">
+                            Error: Please check your input
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Custom Controls -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">4. Custom Interface Elements</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Non-Standard Controls</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div 
+                        class="w-6 h-6 border rounded cursor-pointer"
+                        onclick="toggleCheck(this)">
+                        ✓
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Accessible Controls</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <label class="flex items-center space-x-2">
+                        <input 
+                            type="checkbox"
+                            class="w-6 h-6 rounded border-gray-300"
+                            aria-label="Accept terms">
+                        <span>I accept the terms</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Parsing -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">5. Clean Code Structure</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Invalid Structure</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <table border=1>
+                        <tr>
+                            <td>Missing thead and tbody
+                        <tr>
+                            <td>Unclosed elements
+                    </table>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Valid Structure</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="border p-2">Header</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border p-2">Content</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Compatibility -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">6. Cross-Browser Support</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Browser-Specific</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <input type=text style="-webkit-appearance: none">
+                    <div style="writing-mode: -ms-lr">
+                        Non-standard CSS
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Standard Features</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <input 
+                        type="text" 
+                        class="w-full p-2 border rounded appearance-none">
+                    <div class="writing-mode-horizontal-tb">
+                        Standard CSS properties
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Error Identification -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">7. Programmatic Error Handling</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Manual Error Checking</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <form onsubmit="return validateForm()">
+                        <input type="text" class="border p-2">
+                        <div style="color: red">Required field</div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Native Validation</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <form>
+                        <label class="block">
+                            <span class="text-gray-700">Username</span>
+                            <input 
+                                type="text" 
+                                required
+                                minlength="3"
+                                pattern="[A-Za-z0-9]+"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                aria-describedby="username-error">
+                            <div 
+                                id="username-error"
+                                class="mt-1 text-sm text-red-600"
+                                role="alert">
+                            </div>
+                        </label>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Third-Party Content -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">8. External Content Integration</h2>
+
+            <!-- Bad Example -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Uncontrolled Content</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <iframe src="external-content.html"></iframe>
+                </div>
+            </div>
+
+            <!-- Good Example -->
+            <div>
+                <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Managed Integration</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <iframe 
+                        src="external-content.html"
+                        title="External content viewer"
+                        sandbox="allow-scripts allow-same-origin"
+                        loading="lazy"
+                        class="w-full border-0 rounded"
+                        aria-label="External content display">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Add interactive functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Expandable sections
+            document.querySelectorAll('[aria-controls]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const expanded = button.getAttribute('aria-expanded') === 'true';
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    
+                    button.setAttribute('aria-expanded', !expanded);
+                    content.classList.toggle('hidden');
+                });
+            });
+
+            // Form validation
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

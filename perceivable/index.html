@@ -6,6 +6,37 @@
     <title>WCAG Examples - Non-text Content</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chart-tooltip {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.chart-bar:hover .chart-tooltip,
+.chart-bar:focus .chart-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chart-point {
+    transition: transform 0.2s;
+}
+
+.chart-point:hover,
+.chart-point:focus {
+    transform: scale(1.5);
+}
+
+.chart-segment {
+    transition: transform 0.2s;
+}
+
+.chart-segment:hover,
+.chart-segment:focus {
+    transform: scale(1.05);
+}
+    </style>
 </head>
 <body class="min-h-screen bg-gray-100 p-8">
         <!-- Navigation -->
@@ -234,318 +265,211 @@
   Added proper color contrast for hover/focus states -->
 
   
-  
-<!-- Bad Examples -->
-<div class="mb-12">
-    <h3 class="text-lg font-semibold mb-4 text-red-600">❌ Bad Examples - Inaccessible Charts</h3>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Bad Bar Chart -->
+  <section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6">3. Data Visualization Accessibility Examples</h2>
+
+    <!-- 1. Sales Performance Chart -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- Inaccessible Version -->
         <div class="bg-white p-6 rounded-lg shadow-sm">
-            <div class="flex items-end h-64 space-x-4">
-                <div class="w-16 bg-blue-500 h-1/4"></div>
-                <div class="w-16 bg-blue-500 h-2/4"></div>
-                <div class="w-16 bg-blue-500 h-3/4"></div>
-                <div class="w-16 bg-blue-500 h-full"></div>
-            </div>
-        </div>
-
-        <!-- Bad Line Chart -->
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-            <svg class="h-64 w-full">
-                <path d="M 50,150 L 125,100 L 200,75 L 275,25" 
-                    fill="none" 
-                    stroke="blue" 
-                    stroke-width="2"/>
-            </svg>
-        </div>
-
-        <!-- Bad Donut Chart -->
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-            <div class="h-64 w-64 mx-auto border-8 border-blue-500 rounded-full"></div>
-        </div>
-
-        <!-- Bad Area Chart -->
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-            <svg class="h-64 w-full">
-                <path d="M50,150 L125,100 L200,75 L275,25 L275,150 L50,150 Z" 
-                    fill="lightblue"/>
-            </svg>
-        </div>
-    </div>
-</div>
-
-<!-- Good Examples -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- Bar Chart -->
-    <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h4 id="revenue-chart" class="text-lg font-medium mb-4">Quarterly Revenue 2023</h4>
-        <div class="relative h-80 pb-6" role="img" aria-labelledby="revenue-chart revenue-desc">
-            <!-- Y-axis and bars implementation as in existing code -->
-            // ...existing code...
-        </div>
-        <div id="revenue-desc" class="sr-only">
-            Bar chart showing quarterly revenue for 2023: Q1: $25,000, Q2: $50,000, Q3: $75,000, Q4: $100,000.
-        </div>
-    </div>
-
-    <!-- Line Chart -->
-    <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h4 id="growth-chart" class="text-lg font-medium mb-4">User Growth Trend</h4>
-        <div class="relative h-80" role="img" aria-labelledby="growth-chart growth-desc">
-            <!-- Y-axis labels -->
-            <div class="absolute left-0 h-full flex flex-col justify-between py-4 text-sm text-gray-600">
-                <span>1000</span>
-                <span>750</span>
-                <span>500</span>
-                <span>250</span>
-                <span>0</span>
-            </div>
-
-            <!-- Grid Lines -->
-            <div class="absolute inset-0 ml-16 flex flex-col justify-between py-4">
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-            </div>
-
-            <!-- Line Graph -->
-            <div class="absolute inset-0 ml-16 mt-4">
-                <svg class="h-full w-full" viewBox="0 0 300 200">
-                    <path d="M 50,150 L 125,100 L 200,75 L 275,25" 
-                        fill="none" 
-                        stroke="#2563eb" 
-                        stroke-width="3"
-                    />
-                    <circle cx="50" cy="150" r="4" fill="#2563eb"/>
-                    <circle cx="125" cy="100" r="4" fill="#2563eb"/>
-                    <circle cx="200" cy="75" r="4" fill="#2563eb"/>
-                    <circle cx="275" cy="25" r="4" fill="#2563eb"/>
-                </svg>
-            </div>
-
-            <!-- X-axis labels -->
-            <div class="absolute bottom-0 left-16 right-0 flex justify-between px-8 text-sm text-gray-600">
-                <span>Q1</span>
-                <span>Q2</span>
-                <span>Q3</span>
-                <span>Q4</span>
-            </div>
-        </div>
-        <div id="growth-desc" class="sr-only">
-            Line chart showing user growth trend: Q1: 250, Q2: 500, Q3: 750, Q4: 1000 users.
-        </div>
-    </div>
-
-    <!-- Donut Chart -->
-    <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h4 id="device-usage" class="text-lg font-medium mb-4">Device Usage</h4>
-        <div class="relative h-64 w-64 mx-auto" role="img" aria-labelledby="device-usage device-desc">
-            <svg viewBox="0 0 100 100" class="transform -rotate-90 h-full w-full">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"/>
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#2563eb" stroke-width="10"
-                    stroke-dasharray="220 283" />
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="10"
-                    stroke-dasharray="63 283" stroke-dashoffset="-220"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-4 h-4 bg-blue-600 rounded"></div>
-                        <span class="text-sm font-medium">Mobile (75%)</span>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="w-4 h-4 bg-green-500 rounded"></div>
-                        <span class="text-sm font-medium">Desktop (25%)</span>
-                    </div>
+            <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Inaccessible Sales Chart</h3>
+            <div class="h-64 relative">
+                <!-- Bars without context or labels -->
+                <div class="absolute bottom-0 left-0 flex items-end space-x-4 w-full h-full">
+                    <div class="w-1/4 bg-blue-500 h-[45%]"></div>
+                    <div class="w-1/4 bg-green-500 h-[65%]"></div>
+                    <div class="w-1/4 bg-yellow-500 h-[35%]"></div>
+                    <div class="w-1/4 bg-purple-500 h-[85%]"></div>
                 </div>
             </div>
         </div>
-        <div id="device-desc" class="sr-only">
-            Donut chart showing device usage: 75% Mobile users and 25% Desktop users.
+
+        <!-- Accessible Version -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h4 id="revenue-chart" class="text-lg font-medium mb-4">Quarterly Revenue 2023</h4>
+            <div class="relative h-80" role="img" aria-labelledby="revenue-chart revenue-desc">
+                <!-- Y-axis labels -->
+                <div class="absolute left-0 h-full flex flex-col justify-between py-4 text-sm text-gray-600">
+                    <span>$100K</span>
+                    <span>$75K</span>
+                    <span>$50K</span>
+                    <span>$25K</span>
+                    <span>$0</span>
+                </div>
+        
+                <!-- Grid Lines -->
+                <div class="absolute inset-0 ml-16 flex flex-col justify-between py-4">
+                    <div class="border-b border-gray-200"></div>
+                    <div class="border-b border-gray-200"></div>
+                    <div class="border-b border-gray-200"></div>
+                    <div class="border-b border-gray-200"></div>
+                    <div class="border-b border-gray-200"></div>
+                </div>
+        
+                <!-- Interactive Bars -->
+                <div class="absolute inset-0 ml-16 flex items-end justify-around px-8 pb-4">
+                    <button class="chart-bar group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-t"
+                            tabindex="0"
+                            aria-label="Quarter 1: $25,000">
+                        <div class="relative">
+                            <div style="height: 50px" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
+                                <div class="chart-tooltip absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap">
+                                    Q1: $25,000
+                                </div>
+                            </div>
+                        </div>
+                        <span class="sr-only">Quarter 1: $25,000</span>
+                    </button>
+                    <!-- Repeat for other bars -->
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Area Chart -->
-    <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h4 id="sales-chart" class="text-lg font-medium mb-4">Sales by Category</h4>
-        <div class="relative h-80" role="img" aria-labelledby="sales-chart sales-desc">
-            <!-- Y-axis labels -->
-            <div class="absolute left-0 h-full flex flex-col justify-between py-4 text-sm text-gray-600">
-                <span>$400K</span>
-                <span>$300K</span>
-                <span>$200K</span>
-                <span>$100K</span>
-                <span>$0</span>
+    <!-- 2. Customer Demographics Pie Chart -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- Inaccessible Version -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Inaccessible Pie Chart</h3>
+            <div class="relative h-64 w-64 mx-auto">
+                <svg viewBox="0 0 100 100" class="transform -rotate-90">
+                    <circle cx="50" cy="50" r="45" fill="#3B82F6"/>
+                    <path d="M50 50L95 50A45 45 0 0 1 72.5 91.65L50 50Z" fill="#10B981"/>
+                    <path d="M50 50L72.5 91.65A45 45 0 0 1 27.5 91.65L50 50Z" fill="#F59E0B"/>
+                    <path d="M50 50L27.5 91.65A45 45 0 0 1 5 50L50 50Z" fill="#EF4444"/>
+                </svg>
             </div>
+        </div>
 
-            <!-- Grid Lines -->
-            <div class="absolute inset-0 ml-16 flex flex-col justify-between py-4">
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
-                <div class="border-b border-gray-200"></div>
+        <!-- Accessible Version -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Accessible Pie Chart</h3>
+            <div 
+                class="relative"
+                role="img" 
+                aria-labelledby="demographics-title" 
+                aria-describedby="demographics-description">
+                <h4 id="demographics-title" class="text-center mb-4">Customer Demographics</h4>
+                
+                <div class="flex justify-center items-center">
+                    <div class="w-64">
+                        <svg viewBox="0 0 100 100" class="transform -rotate-90">
+                            <!-- Same pie segments but with patterns -->
+                            <defs>
+                                <pattern id="pattern-1" patternUnits="userSpaceOnUse" width="4" height="4">
+                                    <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#fff" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <circle cx="50" cy="50" r="45" fill="#3B82F6"/>
+                            <path d="M50 50L95 50A45 45 0 0 1 72.5 91.65L50 50Z" fill="#10B981" stroke="#fff"/>
+                            <path d="M50 50L72.5 91.65A45 45 0 0 1 27.5 91.65L50 50Z" fill="#F59E0B" stroke="#fff"/>
+                            <path d="M50 50L27.5 91.65A45 45 0 0 1 5 50L50 50Z" fill="#EF4444" stroke="#fff"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Interactive Legend -->
+                    <div class="ml-8 space-y-4">
+                        <button 
+                            class="flex items-center space-x-2 focus:outline-none focus:ring-2 p-1 rounded"
+                            aria-label="18-24 age group: 30%">
+                            <div class="w-4 h-4 bg-blue-500"></div>
+                            <span>18-24 (30%)</span>
+                        </button>
+                        <!-- Add similar buttons for other segments -->
+                    </div>
+                </div>
+                
+                <!-- Screen reader description -->
+                <div id="demographics-description" class="sr-only">
+                    Customer age distribution: 30% are 18-24, 25% are 25-34, 25% are 35-44, and 20% are 45+
+                </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Area Chart -->
-            <div class="absolute inset-0 ml-16 mt-4">
-                <svg class="h-full w-full" viewBox="0 0 300 200">
-                    <path d="M50,150 L125,100 L200,75 L275,25 L275,175 L50,175 Z" 
-                        fill="#93c5fd" 
-                        fill-opacity="0.3"
-                        stroke="#2563eb"
+    <!-- 3. Trend Line Graph -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Inaccessible Version -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Inaccessible Line Graph</h3>
+            <div class="h-64">
+                <svg class="w-full h-full">
+                    <path 
+                        d="M 50,150 L 125,100 L 200,75 L 275,25" 
+                        stroke="#ddd"
                         stroke-width="2"
-                    />
+                        fill="none"/>
                 </svg>
             </div>
-
-            <!-- X-axis labels -->
-            <div class="absolute bottom-0 left-16 right-0 flex justify-between px-8 text-sm text-gray-600">
-                <span>Q1</span>
-                <span>Q2</span>
-                <span>Q3</span>
-                <span>Q4</span>
-            </div>
-        </div>
-        <div id="sales-desc" class="sr-only">
-            Area chart showing sales growth: Q1: $100K, Q2: $200K, Q3: $300K, Q4: $400K.
-        </div>
-    </div>
-</div>
-  <!-- WCAG Success Criteria Notes -->
-  <div class="max-w-7xl mx-auto p-4 bg-blue-50 rounded-lg mt-8">
-      <h3 class="font-semibold text-blue-900 mb-2">WCAG 1.1.1 & 1.4.1 Success Criteria Met:</h3>
-      <ul class="list-disc pl-5 text-blue-800">
-          <li>Meaningful chart titles and labels</li>
-          <li>Proper ARIA roles and descriptions</li>
-          <li>Screen reader accessible data</li>
-          <li>Multiple ways to understand the data (visual, text, and aria-labels)</li>
-          <li>Color is not the only means of conveying information</li>
-          <li>High contrast ratios (4.5:1 minimum)</li>
-          <li>Interactive elements with clear focus states</li>
-          <li>Proper data labeling and scales</li>
-      </ul>
-  </div>
-
-  <!-- Good Bar Chart Example -->
-<div class="bg-white p-6 rounded-lg shadow-sm">
-    <h4 id="revenue-chart" class="text-lg font-medium mb-4">Quarterly Revenue 2023</h4>
-    <div class="relative h-80" role="img" aria-labelledby="revenue-chart revenue-desc">
-        <!-- Y-axis labels -->
-        <div class="absolute left-0 h-full flex flex-col justify-between py-4 text-sm text-gray-600">
-            <span>$100K</span>
-            <span>$75K</span>
-            <span>$50K</span>
-            <span>$25K</span>
-            <span>$0</span>
         </div>
 
-        <!-- Grid Lines -->
-        <div class="absolute inset-0 ml-16 flex flex-col justify-between py-4">
-            <div class="border-b border-gray-200"></div>
-            <div class="border-b border-gray-200"></div>
-            <div class="border-b border-gray-200"></div>
-            <div class="border-b border-gray-200"></div>
-            <div class="border-b border-gray-200"></div>
-        </div>
+        <!-- Accessible Version -->
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Accessible Line Graph</h3>
+            <div 
+                class="h-64 relative" 
+                role="img" 
+                aria-labelledby="trend-title"
+                aria-describedby="trend-description">
+                <h4 id="trend-title" class="sr-only">Monthly Growth Trend</h4>
 
-        <!-- Bars with Decorative Icons -->
-        <div class="absolute inset-0 ml-16 flex items-end justify-around px-8 pb-4">
-            <!-- Q1 Bar -->
-            <div class="flex flex-col items-center gap-2 group">
-                <div class="relative">
-                    <div style="height: 25%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
-                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
-                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                            $25,000
-                        </div>
-                    </div>
+                <!-- Y-axis labels -->
+                <div class="absolute left-0 h-full flex flex-col justify-between text-sm text-gray-600">
+                    <span>100%</span>
+                    <span>75%</span>
+                    <span>50%</span>
+                    <span>25%</span>
+                    <span>0%</span>
                 </div>
-                <span class="text-sm font-medium">Q1</span>
-            </div>
 
-            <!-- Q2 Bar -->
-            <div class="flex flex-col items-center gap-2 group">
-                <div class="relative">
-                    <div style="height: 50%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
-                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
-                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                            $50,000
-                        </div>
+                <!-- Grid and line graph -->
+                <div class="absolute inset-0 ml-12">
+                    <!-- Grid lines -->
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="border-b border-gray-200"></div>
+                        <div class="border-b border-gray-200"></div>
+                        <div class="border-b border-gray-200"></div>
+                        <div class="border-b border-gray-200"></div>
+                        <div class="border-b border-gray-200"></div>
                     </div>
-                </div>
-                <span class="text-sm font-medium">Q2</span>
-            </div>
 
-            <!-- Q3 Bar -->
-            <div class="flex flex-col items-center gap-2 group">
-                <div class="relative">
-                    <div style="height: 75%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
-                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
-                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                            $75,000
-                        </div>
-                    </div>
+                    <!-- Line with interactive points -->
+                    <svg class="absolute inset-0" style="transform: translateY(10px)">
+                        <path 
+                            d="M 50,150 L 125,100 L 200,75 L 275,25" 
+                            stroke="#3B82F6"
+                            stroke-width="3"
+                            fill="none"/>
+                        
+                        <!-- Interactive data points -->
+                        <g>
+                            <circle 
+                                cx="50" cy="150" r="6" 
+                                class="fill-blue-500 hover:fill-blue-600 cursor-pointer"
+                                tabindex="0"
+                                aria-label="January: 25% growth"/>
+                            <!-- Add similar circles for other data points -->
+                        </g>
+                    </svg>
                 </div>
-                <span class="text-sm font-medium">Q3</span>
-            </div>
 
-            <!-- Q4 Bar -->
-            <div class="flex flex-col items-center gap-2 group">
-                <div class="relative">
-                    <div style="height: 100%" class="w-16 bg-blue-600 rounded-t transition-all duration-200 group-hover:bg-blue-700">
-                        <img src="revenue-icon.svg" alt="" aria-hidden="true" class="w-6 h-6 absolute -top-3 left-1/2 transform -translate-x-1/2"/>
-                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                            $100,000
-                        </div>
-                    </div>
+                <!-- X-axis labels -->
+                <div class="absolute bottom-0 left-12 right-0 flex justify-between text-sm text-gray-600">
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
                 </div>
-                <span class="text-sm font-medium">Q4</span>
+
+                <!-- Screen reader description -->
+                <div id="trend-description" class="sr-only">
+                    Monthly growth trend: January: 25%, February: 50%, March: 75%, April: 100%
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Screen Reader Description -->
-    <div id="revenue-desc" class="sr-only">
-        Bar chart showing quarterly revenue for 2023: Quarter 1: $25,000, Quarter 2: $50,000, Quarter 3: $75,000, Quarter 4: $100,000
-    </div>
-</div>
-<p>
-Key WCAG compliance features:
-
-Decorative images properly marked:
-
-Empty alt attributes: alt=""
-aria-hidden="true" to hide from screen readers
-Interactive features:
-
-Hover effects with transitions
-Tooltips showing exact values
-High contrast colors (4.5:1 minimum)
-Accessibility features:
-
-Proper ARIA roles and labels
-Screen reader description
-Semantic HTML structure
-Clear visual hierarchy
-Multiple ways to understand data
-Data visualization:
-
-Clear axis labels
-Consistent spacing
-Grid lines for reference
-Responsive design
-Interactive feedback
-WCAG Success Criteria met:
-
-1.1.1 Non-text Content
-1.4.1 Use of Color
-1.4.3 Contrast
-2.1.1 Keyboard
-2.4.3 Focus Order
-</p>
 
 <!-- Section 4: Decorative Images -->
 <section class="max-w-7xl mx-auto mb-16">
@@ -845,6 +769,222 @@ Maintains visual design integrity
             <li>Semantic HTML structure</li>
             <li>Proper event handling</li>
             <li>Mobile and touch device support</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Section 6: Time-Based Media -->
+<section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6">6. Time-Based Media Examples</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-12">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Inaccessible Media</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <video autoplay loop muted class="w-full">
+                <source src="https://videos.pexels.com/video-files/2099568/2099568-hd_1920_1080_30fps.mp4" type="video/mp4">
+            </video>
+            <!-- Issues: No captions, auto-playing, no controls, no transcript -->
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Accessible Media</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="space-y-4">
+                <div class="relative">
+                    <video 
+                        id="accessible-video"
+                        class="w-full"
+                        controls
+                        preload="metadata"
+                        poster="video-thumbnail.jpg">
+                        <source src="https://videos.pexels.com/video-files/2099568/2099568-hd_1920_1080_30fps.mp4" type="video/mp4">
+                        <track 
+                            kind="captions" 
+                            src="captions.vtt" 
+                            srclang="en" 
+                            label="English"
+                            default>
+                        <track 
+                            kind="descriptions" 
+                            src="descriptions.vtt" 
+                            srclang="en" 
+                            label="Audio Descriptions">
+                    </video>
+                    <div class="mt-4 flex gap-4">
+                        <button 
+                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            onclick="document.getElementById('transcript').classList.toggle('hidden')">
+                            Show Transcript
+                        </button>
+                        <button 
+                            class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:outline-none"
+                            onclick="document.getElementById('accessible-video').playbackRate = 0.75">
+                            Slow Playback
+                        </button>
+                    </div>
+                </div>
+                <div id="transcript" class="hidden p-4 bg-gray-50 rounded max-h-48 overflow-y-auto">
+                    <h4 class="font-medium mb-2">Transcript:</h4>
+                    <p>Full text transcript of the video content...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Section 7: Data Tables -->
+<section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6">7. Complex Data Tables</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-12">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Inaccessible Table</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm overflow-x-auto">
+            <div class="grid grid-cols-4 gap-4 text-center">
+                <div class="font-bold">Q1</div>
+                <div class="font-bold">Q2</div>
+                <div class="font-bold">Q3</div>
+                <div class="font-bold">Q4</div>
+                <div>100</div>
+                <div>150</div>
+                <div>200</div>
+                <div>250</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - Accessible Table</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm overflow-x-auto">
+            <table class="w-full" role="grid" aria-labelledby="sales-title">
+                <caption id="sales-title" class="sr-only">
+                    Quarterly Sales Data 2023
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="px-4 py-2 bg-gray-50">Quarter</th>
+                        <th scope="col" class="px-4 py-2 bg-gray-50">Revenue</th>
+                        <th scope="col" class="px-4 py-2 bg-gray-50">Growth</th>
+                        <th scope="col" class="px-4 py-2 bg-gray-50">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="px-4 py-2">Q1 2023</th>
+                        <td class="px-4 py-2">$10,000</td>
+                        <td class="px-4 py-2" aria-label="10% increase">
+                            <span class="text-green-600">↑10%</span>
+                        </td>
+                        <td class="px-4 py-2">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                                On Target
+                            </span>
+                        </td>
+                    </tr>
+                    <!-- Add more rows... -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row" class="px-4 py-2 bg-gray-50">Total</th>
+                        <td class="px-4 py-2 bg-gray-50 font-bold">$40,000</td>
+                        <td colspan="2" class="px-4 py-2 bg-gray-50"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Section 8: Color Contrast Patterns -->
+<section class="max-w-7xl mx-auto mb-16">
+    <h2 class="text-2xl font-bold mb-6">8. Color Contrast Patterns</h2>
+
+    <!-- Bad Example -->
+    <div class="mb-12">
+        <h3 class="text-lg font-semibold text-red-600 mb-4">❌ Bad Example - Poor Contrast</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <p style="color: #999" class="text-lg">
+                    Light gray text on light background
+                </p>
+                <button style="background-color: #FFD700; color: white" class="px-4 py-2 rounded mt-4">
+                    Low contrast button
+                </button>
+            </div>
+            <div style="background-color: #F5F5F5" class="p-6 rounded-lg">
+                <p style="color: #A9A9A9">Subtle text that's hard to read</p>
+                <a href="#" style="color: #ADD8E6" class="text-sm">
+                    Light blue link
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Good Example -->
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-4">✅ Good Example - WCAG Compliant Contrast</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="space-y-4">
+                    <!-- Text Contrast -->
+                    <div>
+                        <h4 class="text-gray-900 text-lg font-medium">Primary Text</h4>
+                        <p class="text-gray-700">Secondary text with 7:1 contrast ratio</p>
+                        <span class="text-gray-600 text-sm">
+                            Smaller text with enhanced contrast
+                        </span>
+                    </div>
+
+                    <!-- Interactive Elements -->
+                    <div class="space-y-2">
+                        <button class="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            High Contrast Button
+                        </button>
+                        <a href="#" class="block text-blue-700 hover:underline">
+                            Accessible Link
+                        </a>
+                    </div>
+
+                    <!-- Status Indicators -->
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-sm">
+                            Error
+                        </span>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                            Success
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern Examples -->
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <div class="space-y-4">
+                    <h4 class="text-white text-lg font-medium">Dark Theme</h4>
+                    <p class="text-gray-200">Light text on dark background</p>
+                    <button class="px-4 py-2 bg-white text-gray-800 rounded hover:bg-gray-100 focus:ring-2 focus:ring-white focus:outline-none">
+                        Inverted Button
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WCAG Criteria Notes -->
+    <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+        <h3 class="font-semibold text-blue-900 mb-2">WCAG Success Criteria Met:</h3>
+        <ul class="list-disc pl-5 text-blue-800">
+            <li>1.4.3 Contrast (Minimum) - AA Level (4.5:1 for normal text)</li>
+            <li>1.4.6 Contrast (Enhanced) - AAA Level (7:1 for normal text)</li>
+            <li>1.4.11 Non-text Contrast - AA Level (3:1 for UI components)</li>
+            <li>Multiple visual indicators beyond color</li>
+            <li>Enhanced contrast for small text</li>
         </ul>
     </div>
 </section>
